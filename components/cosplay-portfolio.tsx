@@ -164,7 +164,7 @@ function MediaCarousel({ media }: { media: MediaItem[] }) {
       ))}
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
 
       {/* Navigation Arrows - Only show if more than 1 media item */}
       {media.length > 1 && (
@@ -174,7 +174,7 @@ function MediaCarousel({ media }: { media: MediaItem[] }) {
               e.stopPropagation()
               goToPrevious()
             }}
-            className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-black/60 backdrop-blur-sm border border-violet-500/40 rounded-full p-2 text-violet-300 hover:text-violet-100 hover:bg-violet-600/40 hover:border-violet-400 transition-all duration-300 hover:scale-110"
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-10 bg-glow-bg backdrop-blur-sm border border-glass-border rounded-full p-2 text-primary hover:text-primary-foreground hover:bg-primary/40 hover:border-primary transition-all duration-300 hover:scale-110"
             aria-label="Previous image"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -185,7 +185,7 @@ function MediaCarousel({ media }: { media: MediaItem[] }) {
               e.stopPropagation()
               goToNext()
             }}
-            className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-black/60 backdrop-blur-sm border border-violet-500/40 rounded-full p-2 text-violet-300 hover:text-violet-100 hover:bg-violet-600/40 hover:border-violet-400 transition-all duration-300 hover:scale-110"
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-10 bg-glow-bg backdrop-blur-sm border border-glass-border rounded-full p-2 text-primary hover:text-primary-foreground hover:bg-primary/40 hover:border-primary transition-all duration-300 hover:scale-110"
             aria-label="Next image"
           >
             <ChevronRight className="w-5 h-5" />
@@ -205,8 +205,8 @@ function MediaCarousel({ media }: { media: MediaItem[] }) {
               }}
               className={`transition-all duration-300 rounded-full ${
                 index === currentIndex
-                  ? "w-8 h-2 bg-violet-400 shadow-[0_0_10px_rgba(167,139,250,0.6)]"
-                  : "w-2 h-2 bg-violet-600/60 hover:bg-violet-500"
+                  ? "w-8 h-2 bg-primary shadow-[0_0_10px_var(--color-primary)]"
+                  : "w-2 h-2 bg-primary/60 hover:bg-primary/80"
               }`}
               aria-label={`Go to slide ${index + 1}`}
             />
@@ -228,28 +228,28 @@ export function CosplayPortfolio() {
       : cosplayProjects.filter((project) => project.category === selectedCategory)
 
   return (
-    <section className="mt-32 space-y-12">
+    <section id="portfolio" className="mt-32 space-y-12">
       {/* Section Title */}
       <div className="text-center space-y-4">
-        <h2 className="text-5xl lg:text-6xl font-bold font-[family-name:var(--font-orbitron)] neon-text text-violet-300">
+        <h2 className="text-5xl lg:text-6xl font-bold font-[family-name:var(--font-orbitron)] neon-text text-primary">
           Mi Portfolio
         </h2>
-        <p className="text-xl text-violet-200/80 max-w-2xl mx-auto">
+        <p className="text-xl text-primary-foreground/80 max-w-2xl mx-auto">
           Una colección de mis trabajos favoritos, cada uno con su propia historia y pasión
         </p>
       </div>
 
       {/* Filter Bar */}
       <div className="flex justify-center">
-        <div className="glass-card neon-border border-violet-500/60 bg-black/40 p-2 rounded-2xl inline-flex gap-2">
+        <div className="glass-card neon-border border-glass-border bg-glow-bg p-2 rounded-2xl inline-flex gap-2">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
               className={`px-6 py-3 rounded-xl font-[family-name:var(--font-orbitron)] font-semibold transition-all duration-300 ${
                 selectedCategory === category
-                  ? "bg-violet-600 text-white neon-glow shadow-[0_0_20px_rgba(139,92,246,0.5)]"
-                  : "text-violet-300 hover:text-violet-100 hover:bg-violet-600/20"
+                  ? "bg-primary text-primary-foreground neon-glow shadow-[0_0_20px_var(--color-primary)]"
+                  : "text-primary hover:text-primary-foreground hover:bg-primary/20"
               }`}
             >
               {category}
@@ -263,7 +263,7 @@ export function CosplayPortfolio() {
         {filteredProjects.map((project) => (
           <Card
             key={project.id}
-            className="group relative overflow-hidden bg-black/60 border-violet-500/40 neon-border-subtle hover:border-violet-400 transition-all duration-500 hover:scale-[1.02] cursor-pointer"
+            className="group relative overflow-hidden bg-glow-bg border-glass-border neon-border-subtle hover:border-primary transition-all duration-500 hover:scale-[1.02] cursor-pointer"
           >
             {/* Neon Glow Effect on Hover */}
             <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 rounded-2xl opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-500" />
@@ -273,7 +273,7 @@ export function CosplayPortfolio() {
 
               {/* Category Badge */}
               <div className="absolute top-4 left-4 z-20">
-                <Badge className="bg-black/60 border-violet-400/60 text-violet-300 backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs">
+                <Badge className="bg-glow-bg border-primary/60 text-primary backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs">
                   {project.category}
                 </Badge>
               </div>
@@ -282,30 +282,30 @@ export function CosplayPortfolio() {
               <div className="p-6 space-y-4">
                 {/* Character Info */}
                 <div className="space-y-2">
-                  <h3 className="text-2xl font-bold font-[family-name:var(--font-orbitron)] text-violet-200 group-hover:text-violet-100 transition-colors flex items-center gap-2">
-                    <Sparkles className="w-5 h-5 text-violet-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <h3 className="text-2xl font-bold font-[family-name:var(--font-orbitron)] text-primary-foreground group-hover:text-foreground transition-colors flex items-center gap-2">
+                    <Sparkles className="w-5 h-5 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
                     {project.character}
                   </h3>
-                  <p className="text-violet-300/80 text-sm flex items-center gap-2">
-                    <Heart className="w-4 h-4 text-pink-400" />
+                  <p className="text-primary-foreground/80 text-sm flex items-center gap-2">
+                    <Heart className="w-4 h-4 text-neon-accent" />
                     {project.series}
                   </p>
                 </div>
 
                 {/* Description */}
-                <div className="pt-4 border-t border-violet-500/30 space-y-2">
-                  <p className="text-xs text-violet-400 font-[family-name:var(--font-orbitron)] uppercase tracking-wider flex items-center gap-2">
+                <div className="pt-4 border-t border-glass-border space-y-2">
+                  <p className="text-xs text-primary font-[family-name:var(--font-orbitron)] uppercase tracking-wider flex items-center gap-2">
                     <MapPin className="w-3 h-3" />
                     Descripción
                   </p>
-                  <p className="text-sm text-violet-200/90 leading-relaxed">{project.description}</p>
+                  <p className="text-sm text-primary-foreground/90 leading-relaxed">{project.description}</p>
                 </div>
 
                 {/* Animated Indicator */}
                 <div className="flex gap-2 pt-2">
-                  <div className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
-                  <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse delay-300" />
-                  <div className="w-2 h-2 rounded-full bg-pink-400 animate-pulse delay-700" />
+                  <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                  <div className="w-2 h-2 rounded-full bg-neon-secondary animate-pulse delay-300" />
+                  <div className="w-2 h-2 rounded-full bg-neon-accent animate-pulse delay-700" />
                 </div>
               </div>
             </div>
