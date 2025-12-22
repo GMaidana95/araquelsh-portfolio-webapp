@@ -15,7 +15,6 @@ const navigation = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { name: "Nuevo Cosplay", href: "/admin/new-cosplay", icon: Plus },
   { name: "Editar Portafolio", href: "/admin/edit-portfolio", icon: Edit },
-  { name: "Configuración", href: "/admin/settings", icon: Settings },
 ]
 
 export default function AdminLayout({ children }: AdminLayoutProps) {

@@ -12,24 +12,30 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Upload, X, ImageIcon, Video } from "lucide-react"
 import { supabase } from "@/lib/supabase" // Importamos tu conexión
 import { uploadCosplayImage } from "@/lib/storage-utils" // La función que creamos antes
+import { useRouter } from "next/navigation"
 // ... (tus otros imports)
+interface CosplayFormProps {
+  initialData?: any; // Aquí vendrán los datos de Supabase si es edición
+}
+export default function CosplayForm({ initialData }: CosplayFormProps) {
+  const router = useRouter()
 
-export default function CosplayForm() {
   // 1. Estados para los textos
-  const [character, setCharacter] = useState("")
-  const [series, setSeries] = useState("")
-  const [category, setCategory] = useState("")
-  const [orderIndex, setOrderIndex] = useState("1")
-  const [description, setDescription] = useState("")
-  const [loading, setLoading] = useState(false)
+  const [character, setCharacter] = useState(initialData?.name || "")
+  const [series, setSeries] = useState(initialData?.series || "")
+  const [category, setCategory] = useState(initialData?.category || "")
+  const [orderIndex, setOrderIndex] = useState(initialData?.order_index?.toString() || "1")
+  const [description, setDescription] = useState(initialData?.description || "")
 
   // 2. Modificamos mediaFiles para que guarde el ARCHIVO real (file)
-  const [mediaFiles, setMediaFiles] = useState<Array<{ 
-    id: string; 
-    type: "image" | "video"; 
-    preview: string;
-    file: File; // <-- Guardamos el archivo aquí para subirlo luego
-  }>>([])
+  const [mediaFiles, setMediaFiles] = useState<any[]>(
+    initialData?.media_urls?.map((url: string) => ({
+      id: Math.random().toString(),
+      type: "image",
+      preview: url,
+      isExisting: true // Marcamos que ya está en Supabase
+    })) || []
+  )
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
@@ -45,6 +51,8 @@ export default function CosplayForm() {
     setMediaFiles([...mediaFiles, ...newFiles])
   }
 
+  const [loading, setLoading] = useState(false)
+
   const removeFile = (id: string) => {
     setMediaFiles(mediaFiles.filter((file) => file.id !== id))
   }
@@ -54,35 +62,54 @@ export default function CosplayForm() {
     setLoading(true)
 
     try {
-      // 1. Subir todos los archivos al Bucket de Supabase
-      const uploadPromises = mediaFiles.map(item => uploadCosplayImage(item.file))
-      const uploadedUrls = await Promise.all(uploadPromises)
-      
-      // Filtramos por si alguna subida falló (devuelve null)
-      const validUrls = uploadedUrls.filter(url => url !== null) as string[]
+    // 1. Manejo de imágenes (Subir solo las nuevas, mantener las viejas)
+    const newFiles = mediaFiles.filter(f => !f.isExisting)
+    const existingUrls = mediaFiles.filter(f => f.isExisting).map(f => f.preview)
+    
+    const uploadPromises = newFiles.map(item => uploadCosplayImage(item.file))
+    const newUrls = await Promise.all(uploadPromises)
+    
+    const allUrls = [...existingUrls, ...newUrls.filter(url => url !== null)]
 
-      // 2. Insertar en la Base de Datos
+    const dataToSave = {
+      name: character,
+      series: series,
+      description: description,
+      order_index: parseInt(orderIndex),
+      category: category,
+      media_urls: allUrls,
+    }
+
+    if (initialData?.id) {
+      // MODO EDICIÓN: Usamos .update()
       const { error } = await supabase
         .from('cosplays')
-        .insert([{
-          name: character,
-          series: series,
-          description: description,
-          order_index: parseInt(orderIndex),
-          media_urls: validUrls, // Guardamos el array de URLs
-          // category: category // Agrégalo si añadiste la columna a tu DB
-        }])
-
+        .update(dataToSave)
+        .eq('id', initialData.id)
+      
       if (error) throw error
-
-      alert("¡Proyecto guardado con éxito!")
-      // Aquí podrías limpiar el formulario o redireccionar
-    } catch (error: any) {
-      alert("Error al guardar: " + error.message)
-    } finally {
-      setLoading(false)
+      alert("¡Cosplay actualizado!")
+      // Redirigir de vuelta al listado de edición y forzar recarga para que la lista muestre el cambio
+      const ts = Date.now()
+      router.push(`/admin/edit-portfolio?updated=${ts}`)
+      // fuerza refresco de datos en la nueva ruta
+      router.refresh()
+    } else {
+      // MODO CREACIÓN: Usamos .insert()
+      const { error } = await supabase
+        .from('cosplays')
+        .insert([dataToSave])
+      
+      if (error) throw error
+      alert("¡Cosplay creado!")
+      router.push('/admin/edit-portfolio')
     }
+  } catch (error: any) {
+    alert("Error: " + error.message)
+  } finally {
+    setLoading(false)
   }
+}
 
   return (
     <Card className="glass-card border-violet-500/30">

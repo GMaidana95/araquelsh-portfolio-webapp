@@ -171,7 +171,7 @@ export function CosplayPortfolio() {
           id: item.id,
           character: item.name,
           series: item.series,
-          category: item.category || "Otros", // Por si no tienes categoría en la DB aún
+          category: item.category,
           description: item.description || "",
           media: item.media_urls.map((url: string) => ({
             // Detectamos si es video por la extensión o asumimos imagen
