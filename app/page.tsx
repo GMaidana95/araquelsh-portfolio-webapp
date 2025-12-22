@@ -3,6 +3,13 @@ import { AwardIcon, Gamepad2, Mic2Icon,Users, MapPin } from "lucide-react"
 import { CosplayPortfolio } from "@/components/cosplay-portfolio"
 import { ContactForm } from "@/components/contact-form"
 import { Navbar } from "@/components/navbar"
+import { supabase } from '@/lib/supabase'
+
+/*// Solo para probar en la consola de la terminal
+supabase.from('cosplays').select('*').then(({ data, error }) => {
+  if (error) console.error('Error de conexión:', error.message)
+  else console.log('Conexión exitosa. Datos actuales:', data)
+})*/
 
 export default function Home() {
   return (
