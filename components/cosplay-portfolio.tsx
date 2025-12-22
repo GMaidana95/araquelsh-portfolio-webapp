@@ -2,10 +2,11 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Sparkles, Heart, MapPin, ChevronLeft, ChevronRight } from "lucide-react"
+import { Sparkles, Heart, MapPin, ChevronLeft, ChevronRight, Loader2 } from "lucide-react"
+import { supabase } from "@/lib/supabase" // Importamos tu cliente
 
 type MediaItem = {
   type: "image" | "video"
@@ -21,78 +22,6 @@ type CosplayProject = {
   description: string
 }
 
-const cosplayProjects: CosplayProject[] = [
-  {
-    id: 1,
-    media: [
-      { type: "image", src: "/anime-character-cyberpunk-violet-armor.jpg" },
-      { type: "image", src: "/2b-cosplay-front-view.jpg" },
-      { type: "video", src: "/2b-cosplay-video-showcase.jpg" },
-    ],
-    character: "2B",
-    series: "NieR: Automata",
-    category: "Videojuegos",
-    description: "Comic-Con Argentina 2023 - Mejor Armadura",
-  },
-  {
-    id: 2,
-    media: [
-      { type: "image", src: "/kuromi-gothic-lolita-dark-aesthetic.jpg" },
-      { type: "image", src: "/kuromi-cosplay-details.jpg" },
-    ],
-    character: "Kuromi",
-    series: "Sanrio",
-    category: "Anime",
-    description: "Bahía Blanca Anime Fest - Fan Favorite",
-  },
-  {
-    id: 3,
-    media: [
-      { type: "image", src: "/jinx-league-of-legends-violet-hair-cyberpunk.jpg" },
-      { type: "video", src: "/jinx-cosplay-performance-video.jpg" },
-      { type: "image", src: "/jinx-weapons-detail.jpg" },
-    ],
-    character: "Jinx",
-    series: "League of Legends",
-    category: "Videojuegos",
-    description: "La Plata Gaming Convention 2024 - Best in Show",
-  },
-  {
-    id: 4,
-    media: [
-      { type: "image", src: "/marin-kitagawa-dress-elegant-anime.jpg" },
-      { type: "image", src: "/marin-cosplay-dress-detail.jpg" },
-    ],
-    character: "Marin Kitagawa",
-    series: "My Dress-Up Darling",
-    category: "Anime",
-    description: "Buenos Aires Anime Expo - Concurso Principal",
-  },
-  {
-    id: 5,
-    media: [
-      { type: "image", src: "/cyberpunk-edgerunner-lucy-netrunner-suit.jpg" },
-      { type: "video", src: "/lucy-cosplay-led-effects-video.jpg" },
-      { type: "image", src: "/lucy-suit-tech-details.jpg" },
-    ],
-    character: "Lucy",
-    series: "Cyberpunk: Edgerunners",
-    category: "Anime",
-    description: "Cosplay Fest Patagonia - Mejor Construcción",
-  },
-  {
-    id: 6,
-    media: [
-      { type: "image", src: "/vi-arcane-pink-hair-punk-fighter.jpg" },
-      { type: "image", src: "/vi-gauntlets-cosplay.jpg" },
-      { type: "video", src: "/vi-cosplay-action-video.jpg" },
-    ],
-    character: "Vi",
-    series: "Arcane",
-    category: "Videojuegos",
-    description: "Argentina Game Show - Mejor Performance",
-  },
-]
 
 function MediaCarousel({ media }: { media: MediaItem[] }) {
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -218,15 +147,65 @@ function MediaCarousel({ media }: { media: MediaItem[] }) {
 }
 
 export function CosplayPortfolio() {
+  // 2. Cambiamos la constante estática por un estado
+  const [projects, setProjects] = useState<CosplayProject[]>([])
+  const [loading, setLoading] = useState(true)
   const [selectedCategory, setSelectedCategory] = useState<string>("Todos")
 
   const categories = ["Todos", "Videojuegos", "Anime"]
 
+  // 3. Función para traer datos de Supabase
+  useEffect(() => {
+    const fetchProjects = async () => {
+      setLoading(true)
+      try {
+        const { data, error } = await supabase
+          .from('cosplays')
+          .select('*')
+          .order('order_index', { ascending: true })
+
+        if (error) throw error
+
+        // 4. Mapeamos los datos de la DB al formato que espera v0
+        const formattedProjects: CosplayProject[] = data.map((item) => ({
+          id: item.id,
+          character: item.name,
+          series: item.series,
+          category: item.category || "Otros", // Por si no tienes categoría en la DB aún
+          description: item.description || "",
+          media: item.media_urls.map((url: string) => ({
+            // Detectamos si es video por la extensión o asumimos imagen
+            type: url.toLowerCase().endsWith('.mp4') ? "video" : "image",
+            src: url
+          }))
+        }))
+
+        setProjects(formattedProjects)
+      } catch (err) {
+        console.error("Error cargando portfolio:", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchProjects()
+  }, [])
+
+  // 5. Filtramos sobre el estado 'projects'
   const filteredProjects =
     selectedCategory === "Todos"
-      ? cosplayProjects
-      : cosplayProjects.filter((project) => project.category === selectedCategory)
+      ? projects
+      : projects.filter((project) => project.category === selectedCategory)
 
+  // 6. Estado de carga visual
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center py-20 space-y-4">
+        <Loader2 className="w-10 h-10 text-primary animate-spin" />
+        <p className="text-primary font-[family-name:var(--font-orbitron)]">Cargando Galería...</p>
+      </div>
+    )
+  }
   return (
     <section id="portfolio" className="mt-32 space-y-12">
       {/* Section Title */}

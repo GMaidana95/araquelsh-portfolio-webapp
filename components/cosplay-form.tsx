@@ -10,9 +10,26 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Upload, X, ImageIcon, Video } from "lucide-react"
+import { supabase } from "@/lib/supabase" // Importamos tu conexión
+import { uploadCosplayImage } from "@/lib/storage-utils" // La función que creamos antes
+// ... (tus otros imports)
 
 export default function CosplayForm() {
-  const [mediaFiles, setMediaFiles] = useState<Array<{ id: string; type: "image" | "video"; preview: string }>>([])
+  // 1. Estados para los textos
+  const [character, setCharacter] = useState("")
+  const [series, setSeries] = useState("")
+  const [category, setCategory] = useState("")
+  const [orderIndex, setOrderIndex] = useState("1")
+  const [description, setDescription] = useState("")
+  const [loading, setLoading] = useState(false)
+
+  // 2. Modificamos mediaFiles para que guarde el ARCHIVO real (file)
+  const [mediaFiles, setMediaFiles] = useState<Array<{ 
+    id: string; 
+    type: "image" | "video"; 
+    preview: string;
+    file: File; // <-- Guardamos el archivo aquí para subirlo luego
+  }>>([])
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files
@@ -22,6 +39,7 @@ export default function CosplayForm() {
       id: Math.random().toString(36).substr(2, 9),
       type: file.type.startsWith("video/") ? ("video" as const) : ("image" as const),
       preview: URL.createObjectURL(file),
+      file: file, // <-- Guardamos el archivo físico
     }))
 
     setMediaFiles([...mediaFiles, ...newFiles])
@@ -29,6 +47,41 @@ export default function CosplayForm() {
 
   const removeFile = (id: string) => {
     setMediaFiles(mediaFiles.filter((file) => file.id !== id))
+  }
+
+  const handleSubmit = async () => {
+    if (!character || !series) return alert("Nombre y Serie son obligatorios")
+    setLoading(true)
+
+    try {
+      // 1. Subir todos los archivos al Bucket de Supabase
+      const uploadPromises = mediaFiles.map(item => uploadCosplayImage(item.file))
+      const uploadedUrls = await Promise.all(uploadPromises)
+      
+      // Filtramos por si alguna subida falló (devuelve null)
+      const validUrls = uploadedUrls.filter(url => url !== null) as string[]
+
+      // 2. Insertar en la Base de Datos
+      const { error } = await supabase
+        .from('cosplays')
+        .insert([{
+          name: character,
+          series: series,
+          description: description,
+          order_index: parseInt(orderIndex),
+          media_urls: validUrls, // Guardamos el array de URLs
+          // category: category // Agrégalo si añadiste la columna a tu DB
+        }])
+
+      if (error) throw error
+
+      alert("¡Proyecto guardado con éxito!")
+      // Aquí podrías limpiar el formulario o redireccionar
+    } catch (error: any) {
+      alert("Error al guardar: " + error.message)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -90,6 +143,8 @@ export default function CosplayForm() {
           <div className="space-y-2">
             <Label htmlFor="character">Nombre del Personaje *</Label>
             <Input
+              value={character} 
+              onChange={(e) => setCharacter(e.target.value)}
               id="character"
               placeholder="Ej: 2B, Jinx, Kuromi..."
               className="bg-black/40 border-violet-500/30 focus:border-violet-500"
@@ -99,6 +154,8 @@ export default function CosplayForm() {
           <div className="space-y-2">
             <Label htmlFor="series">Serie / Juego *</Label>
             <Input
+              value={series} 
+              onChange={(e) => setSeries(e.target.value)}
               id="series"
               placeholder="Ej: NieR: Automata, League of Legends..."
               className="bg-black/40 border-violet-500/30 focus:border-violet-500"
@@ -107,14 +164,14 @@ export default function CosplayForm() {
 
           <div className="space-y-2">
             <Label htmlFor="category">Categoría *</Label>
-            <Select>
+            <Select onValueChange={setCategory} value={category}>
               <SelectTrigger className="bg-black/40 border-violet-500/30 focus:border-violet-500">
                 <SelectValue placeholder="Selecciona una categoría" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="videojuegos">Videojuegos</SelectItem>
+                <SelectItem value="game">Videojuegos</SelectItem>
                 <SelectItem value="anime">Anime</SelectItem>
-                <SelectItem value="otros">Otros</SelectItem>
+                <SelectItem value="other">Otros</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -124,6 +181,8 @@ export default function CosplayForm() {
             <Input
               id="orderIndex"
               type="number"
+              value={orderIndex}
+              onChange={(e) => setOrderIndex(e.target.value)}
               min="1"
               placeholder="1"
               className="bg-black/40 border-violet-500/30 focus:border-violet-500"
@@ -139,16 +198,39 @@ export default function CosplayForm() {
             rows={4}
             placeholder="Describe el lugar de presentación, premios ganados, eventos, etc..."
             className="bg-black/40 border-violet-500/30 focus:border-violet-500"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
           <p className="text-xs text-muted-foreground">Información sobre eventos, premios o lugares de presentación</p>
         </div>
 
         <div className="flex justify-end gap-4 pt-4 border-t border-violet-500/30">
-          <Button variant="outline" className="border-violet-500/30 bg-transparent">
+          <Button 
+            variant="outline" 
+            className="border-violet-500/30 bg-transparent"
+            disabled={loading} // Deshabilitar si está cargando
+            onClick={() => {
+              /* Aquí puedes limpiar los estados si quieres cancelar */
+              if(confirm("¿Seguro que quieres cancelar?")) {
+                  // Lógica para resetear campos
+              }
+            }}
+          >
             Cancelar
           </Button>
-          <Button className="bg-violet-600 hover:bg-violet-700 text-white font-[family-name:var(--font-orbitron)]">
-            Guardar Cosplay
+          
+          <Button 
+            className="bg-violet-600 hover:bg-violet-700 text-white font-[family-name:var(--font-orbitron)]"
+            onClick={handleSubmit} // Llamamos a la función que guarda en Supabase
+            disabled={loading}    // Evita clics repetidos
+          >
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <span className="animate-spin">🌀</span> Guardando...
+              </span>
+            ) : (
+              "Guardar Cosplay"
+            )}
           </Button>
         </div>
       </div>
