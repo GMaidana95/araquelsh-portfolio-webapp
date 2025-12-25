@@ -1,30 +1,43 @@
 "use client"
 
 import type React from "react"
-
 import { useState } from "react"
+import { useRouter } from "next/navigation" // Importamos el router de Next.js
+import { supabase } from "@/lib/supabase" // Tu instancia de Supabase
 import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-import { Eye, EyeOff, Sparkles } from "lucide-react"
+import { Eye, EyeOff, Sparkles, AlertCircle } from "lucide-react"
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null) // Estado para errores
+  const router = useRouter()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
+    setError(null)
 
-    // Simulate login
-    setTimeout(() => {
-      console.log("Login attempt:", { email, password })
+    try {
+      const { data, error: authError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
+
+      if (authError) throw authError
+
+      // Si todo sale bien, redirigimos al dashboard
+      router.push("/admin")
+      router.refresh() 
+    } catch (err: any) {
+      setError(err.message || "Credenciales incorrectas")
+    } finally {
       setIsLoading(false)
-      // Redirect to admin dashboard
-      window.location.href = "/admin"
-    }, 1500)
+    }
   }
 
   return (
@@ -87,6 +100,13 @@ export default function AdminLoginPage() {
             </h1>
             <p className="text-sm text-violet-300/60">Panel de Administración</p>
           </div>
+
+          {error && (
+            <div className="bg-red-500/10 border border-red-500/50 p-3 rounded-lg flex items-center gap-2 text-red-400 text-sm">
+              <AlertCircle className="w-4 h-4" />
+              {error}
+            </div>
+          )}
 
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-6">

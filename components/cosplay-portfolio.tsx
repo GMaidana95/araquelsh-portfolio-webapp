@@ -251,7 +251,7 @@ export function CosplayPortfolio() {
               <MediaCarousel media={project.media} />
 
               {/* Category Badge */}
-              <div className="absolute top-4 left-4 z-20">
+              <div className="absolute top-4 left-4 z-20 ">
                 <Badge className="bg-glow-bg border-primary/60 text-primary backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs">
                   {project.category}
                 </Badge>

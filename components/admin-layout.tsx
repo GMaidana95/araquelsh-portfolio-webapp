@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { LayoutDashboard, Plus, Edit, Settings, Menu, X, Home } from "lucide-react"
+import LogoutButton from "@/components/logout-button"
 
 interface AdminLayoutProps {
   children: ReactNode
@@ -72,7 +73,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             })}
           </nav>
 
-          <div className="p-4 border-t border-violet-500/30">
+          <div className="p-4 border-t border-violet-500/30 space-y-2">
             <Link href="/">
               <Button
                 variant="outline"
@@ -82,6 +83,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                 Volver al Sitio
               </Button>
             </Link>
+
+            <div>
+              <LogoutButton />
+            </div>
           </div>
         </aside>
 
@@ -129,7 +134,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                 })}
               </nav>
 
-              <div className="p-4 border-t border-violet-500/30">
+              <div className="p-4 border-t border-violet-500/30 space-y-2">
                 <Link href="/">
                   <Button
                     variant="outline"
@@ -139,6 +144,10 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                     Volver al Sitio
                   </Button>
                 </Link>
+
+                <div>
+                  <LogoutButton/>
+                </div>
               </div>
             </aside>
           </div>
