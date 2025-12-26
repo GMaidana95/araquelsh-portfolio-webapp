@@ -82,11 +82,11 @@ export function Participaciones() {
 
   const getParticipacionColor = (tipo: string) => {
     switch (tipo) {
-      case 'Concurso':
+      case 'Jurado':
         return 'border-amber-400 text-amber-300 bg-amber-600/10'
       case 'Anfitrión':
         return 'border-green-400 text-green-300 bg-green-600/10'
-      case 'Invitado':
+      case 'Invitada':
         return 'border-blue-400 text-blue-300 bg-blue-600/10'
       case 'Participante':
         return 'border-pink-400 text-pink-300 bg-blue-600/10'
@@ -99,11 +99,11 @@ export function Participaciones() {
 
   const getParticipacionIcon = (tipo: string) => {
     switch (tipo) {
-      case 'Concurso':
+      case 'Jurado':
         return <Award className="w-4 h-4 text-amber-300" />
       case 'Anfitrión':
         return <MicVocal className="w-4 h-4 text-green-300" />
-      case 'Invitado':
+      case 'Invitada':
         return <Sparkles className="w-4 h-4 text-blue-300" />
       case 'Participante':
         return <LucideTrophy className="w-4 h-4 text-pink-300" />
@@ -119,10 +119,10 @@ export function Participaciones() {
       {/* Section Title */}
       <div className="text-center space-y-4 mb-12">
         <h2 className="text-5xl lg:text-6xl font-bold font-[family-name:var(--font-orbitron)] neon-text text-violet-300">
-          Participaciones
+          Eventos
         </h2>
         <p className="text-violet-200/80 text-lg max-w-2xl mx-auto">
-          Eventos donde he participado y próximas apariciones
+          Actividades donde he participado y próximas apariciones
         </p>
       </div>
 

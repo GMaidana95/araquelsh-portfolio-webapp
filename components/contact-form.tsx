@@ -1,7 +1,7 @@
 "use client"
 
 import type React from "react"
-
+import { toast } from "sonner"
 import { useState } from "react"
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -12,16 +12,38 @@ import { Send, Sparkles, Heart } from "lucide-react"
 export function ContactForm() {
   const [formData, setFormData] = useState({
     name: "",
+    surename: "",
     email: "",
     eventName: "",
     date: "",
     message: "",
   })
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const notify = () => toast("Mensaje enviado!")
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log("Form submitted:", formData)
-    // Add form submission logic here
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+
+      if (response.ok) {
+        alert("¡Mensaje enviado con éxito! Araquelsh te contactará pronto.")
+        setFormData({ name: "",surename: "", email: "", eventName: "", date: "", message: "" }) // Limpiar form
+      } else {
+        throw new Error()
+      }
+    } catch (error) {
+      alert("Hubo un error al enviar. Por favor, intenta de nuevo.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -166,15 +188,29 @@ export function ContactForm() {
                 />
               </div>
 
+              <div className="opacity-0 absolute -z-10 h-0 w-0 overflow-hidden" aria-hidden="true">
+                <label htmlFor="address">Dirección (No completar)</label>
+                <Input
+                  id="address"
+                  name="address"
+                  tabIndex={-1} // Evita que un humano llegue aquí con la tecla 'Tab'
+                  value={formData.surename}
+                  onChange={handleChange}
+                  placeholder="Tu apellido"
+                />
+              </div>              
+
               {/* Submit Button */}
               <Button
                 type="submit"
+                disabled={isSubmitting}
+                onClick={()=>notify}
                 className="w-full h-14 bg-gradient-to-r from-violet-600 via-purple-600 to-violet-600 hover:from-violet-500 hover:via-purple-500 hover:to-violet-500 text-white font-[family-name:var(--font-orbitron)] text-lg uppercase tracking-wider neon-border border-violet-400 relative overflow-hidden group/btn"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400 opacity-0 group-hover/btn:opacity-100 animate-pulse-neon" />
                 <span className="relative flex items-center justify-center gap-3">
                   <Send className="w-5 h-5" />
-                  Enviar Mensaje
+                  {isSubmitting ? "Enviando..." : "Enviar Mensaje"}
                 </span>
               </Button>
 

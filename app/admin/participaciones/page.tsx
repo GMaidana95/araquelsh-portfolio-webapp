@@ -94,11 +94,11 @@ export default function EditParticipacionesPage() {
   // Helpers for badge styles/icons
   const getParticipacionColor = (tipo: string) => {
     switch (tipo) {
-      case 'Concurso':
+      case 'Jurado':
         return 'border-amber-400 text-amber-300 bg-amber-600/10'
       case 'Anfitrión':
         return 'border-green-400 text-green-300 bg-green-600/10'
-      case 'Invitado':
+      case 'Invitada':
         return 'border-blue-400 text-blue-300 bg-blue-600/10'
       case 'Participante':
         return 'border-pink-400 text-pink-300 bg-blue-600/10'
@@ -111,11 +111,11 @@ export default function EditParticipacionesPage() {
 
   const getParticipacionIcon = (tipo: string) => {
     switch (tipo) {
-      case 'Concurso':
+      case 'Jurado':
         return <Award className="w-4 h-4 text-amber-300" />
       case 'Anfitrión':
         return <MicVocal className="w-4 h-4 text-green-300" />
-      case 'Invitado':
+      case 'Invitada':
         return <Sparkles className="w-4 h-4 text-blue-300" />
       case 'Participante':
         return <LucideTrophy className="w-4 h-4 text-pink-300" />
@@ -270,9 +270,9 @@ export default function EditParticipacionesPage() {
                               <SelectValue />
                             </SelectTrigger>
                             <SelectContent className="bg-black border-violet-500/30">
-                              <SelectItem value="Concurso">Concurso</SelectItem>
+                              <SelectItem value="Jurado">Jurado</SelectItem>
                               <SelectItem value="Anfitrión">Anfitrión</SelectItem>
-                              <SelectItem value="Invitado">Invitado</SelectItem>
+                              <SelectItem value="Invitada">Invitada</SelectItem>
                               <SelectItem value="Participante">Participante</SelectItem>
                               <SelectItem value="Colaboracion">Colaboracion</SelectItem>
                             </SelectContent>

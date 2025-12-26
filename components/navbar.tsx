@@ -165,7 +165,7 @@ export function Navbar() {
               <p className="text-violet-400 text-sm font-medium mb-2">Redes</p>
               <div className="space-y-2 pl-4">
                 <a
-                  href="https://instagram.com/araquelsh"
+                  href="https://instagram.com/araquelshh"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-violet-200 hover:text-violet-300 transition-colors py-2"
@@ -174,7 +174,7 @@ export function Navbar() {
                   Instagram
                 </a>
                 <a
-                  href="https://tiktok.com/@araquelsh"
+                  href="https://tiktok.com/@araquelshh"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2 text-violet-200 hover:text-violet-300 transition-colors py-2"
