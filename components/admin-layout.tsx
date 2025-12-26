@@ -5,7 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { LayoutDashboard, Plus, Edit, Settings, Menu, X, Home } from "lucide-react"
+import { LayoutDashboard, Plus, Edit, Menu, X, Home, Calendar } from "lucide-react"
 import LogoutButton from "@/components/logout-button"
 
 interface AdminLayoutProps {
@@ -16,6 +16,7 @@ const navigation = [
   { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { name: "Nuevo Cosplay", href: "/admin/new-cosplay", icon: Plus },
   { name: "Editar Portafolio", href: "/admin/edit-portfolio", icon: Edit },
+  { name: "Participaciones", href: "/admin/participaciones", icon: Calendar }
 ]
 
 export default function AdminLayout({ children }: AdminLayoutProps) {
