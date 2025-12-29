@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { LayoutDashboard, Plus, Edit, Menu, X, Home, Calendar } from "lucide-react"
 import LogoutButton from "@/components/logout-button"
-
+import { useInactivityLogout } from "@/hooks/use-inactivity-logout"
 interface AdminLayoutProps {
   children: ReactNode
 }
@@ -22,6 +22,7 @@ const navigation = [
 export default function AdminLayout({ children }: AdminLayoutProps) {
   const pathname = usePathname()
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  useInactivityLogout(15 * 60 * 1000)
 
   return (
     <div className="min-h-screen bg-black">

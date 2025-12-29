@@ -54,7 +54,46 @@ export default function CosplayForm({ initialData }: CosplayFormProps) {
   const [loading, setLoading] = useState(false)
 
   const removeFile = (id: string) => {
-    setMediaFiles(mediaFiles.filter((file) => file.id !== id))
+    setMediaFiles((prev) => {
+      const toRemove = prev.find((file) => file.id === id)
+      if (toRemove && toRemove.file && toRemove.preview) {
+        // Revoca la URL creada con URL.createObjectURL para evitar fugas de memoria
+        URL.revokeObjectURL(toRemove.preview)
+      }
+      return prev.filter((file) => file.id !== id)
+    })
+  }
+
+  const resetForm = () => {
+    // Revoca todas las object URLs de los archivos nuevos antes de limpiar
+    mediaFiles.forEach((f) => {
+      if (f.file && f.preview) {
+        URL.revokeObjectURL(f.preview)
+      }
+    })
+
+    if (initialData) {
+      setCharacter(initialData.name || "")
+      setSeries(initialData.series || "")
+      setCategory(initialData.category || "")
+      setOrderIndex(initialData.order_index?.toString() || "1")
+      setDescription(initialData.description || "")
+      setMediaFiles(
+        initialData.media_urls?.map((url: string) => ({
+          id: Math.random().toString(),
+          type: "image",
+          preview: url,
+          isExisting: true,
+        })) || []
+      )
+    } else {
+      setCharacter("")
+      setSeries("")
+      setCategory("")
+      setOrderIndex("1")
+      setDescription("")
+      setMediaFiles([])
+    }
   }
 
   const handleSubmit = async () => {
@@ -161,7 +200,7 @@ export default function CosplayForm({ initialData }: CosplayFormProps) {
           </div>
 
           <p className="text-sm text-muted-foreground">
-            Sube múltiples imágenes y videos. El primer medio será la imagen principal.
+            Sube múltiples imágenes y videos (MAX 50mb por archivo). El primer medio será la imagen principal.
           </p>
         </div>
 
@@ -184,13 +223,13 @@ export default function CosplayForm({ initialData }: CosplayFormProps) {
               value={series} 
               onChange={(e) => setSeries(e.target.value)}
               id="series"
-              placeholder="Ej: NieR: Automata, League of Legends..."
+              placeholder="Ej: League of Legends, Naruto..."
               className="bg-black/40 border-violet-500/30 focus:border-violet-500"
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="category">Categoría *</Label>
+            <Label htmlFor="category">Categoría</Label>
             <Select onValueChange={setCategory} value={category}>
               <SelectTrigger className="bg-black/40 border-violet-500/30 focus:border-violet-500">
                 <SelectValue placeholder="Selecciona una categoría" />
@@ -204,7 +243,7 @@ export default function CosplayForm({ initialData }: CosplayFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="orderIndex">Índice de Orden *</Label>
+            <Label htmlFor="orderIndex">Índice de Orden</Label>
             <Input
               id="orderIndex"
               type="number"
@@ -228,8 +267,9 @@ export default function CosplayForm({ initialData }: CosplayFormProps) {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <p className="text-xs text-muted-foreground">Información sobre eventos, premios o lugares de presentación</p>
+          
         </div>
+        <p className="text-s text-muted-foreground">* Campos obligatorios</p>
 
         <div className="flex justify-end gap-4 pt-4 border-t border-violet-500/30">
           <Button 
@@ -237,9 +277,9 @@ export default function CosplayForm({ initialData }: CosplayFormProps) {
             className="border-violet-500/30 bg-transparent"
             disabled={loading} // Deshabilitar si está cargando
             onClick={() => {
-              /* Aquí puedes limpiar los estados si quieres cancelar */
-              if(confirm("¿Seguro que quieres cancelar?")) {
-                  // Lógica para resetear campos
+              /* Limpiamos únicamente los estados del formulario */
+              if (confirm("¿Seguro que quieres cancelar?")) {
+                resetForm()
               }
             }}
           >

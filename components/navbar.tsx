@@ -82,7 +82,7 @@ export function Navbar() {
                   asChild
                 >
                   <a
-                    href="https://instagram.com/araquelsh"
+                    href="https://instagram.com/araquelshh"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2"
@@ -96,7 +96,7 @@ export function Navbar() {
                   asChild
                 >
                   <a
-                    href="https://tiktok.com/@araquelsh"
+                    href="https://tiktok.com/@araquelshh"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2"
