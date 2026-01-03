@@ -4,7 +4,7 @@ import { CosplayPortfolio } from "@/components/cosplay-portfolio"
 import { Participaciones } from "@/components/participaciones"
 import { ContactForm } from "@/components/contact-form"
 import { Navbar } from "@/components/navbar"
-
+import { Footer } from "@/components/footer"
 
 export default function Home() {
   return (
@@ -118,6 +118,8 @@ export default function Home() {
       <Participaciones />
 
       <ContactForm />
+      
+      <Footer />
     </main>
   )
 }
