@@ -16,7 +16,7 @@ const geist = Geist({
 })
 
 export const metadata: Metadata = {
-  title: "Araquelsh - Cosplayer Profesional",
+  title: "Araquelsh - Cosplayer Portfolio",
   description: "Portfolio profesional de Araquelsh - Cosplayer, Jurado y Anfitriona de Bahia Blanca, Argentina",
   generator: "v0.app",
   icons: {
