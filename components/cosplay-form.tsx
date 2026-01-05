@@ -155,7 +155,7 @@ export default function CosplayForm({ initialData }: CosplayFormProps) {
       <div className="p-6 lg:p-8 space-y-6">
         {/* Media Upload Section */}
         <div className="space-y-4">
-          <Label className="text-lg font-[family-name:var(--font-orbitron)] text-violet-300">Imágenes y Videos</Label>
+          <Label className="text-lg font-orbitron text-violet-300">Imágenes y Videos</Label>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {/* Upload Button */}
@@ -287,7 +287,7 @@ export default function CosplayForm({ initialData }: CosplayFormProps) {
           </Button>
           
           <Button 
-            className="bg-violet-600 hover:bg-violet-700 text-white font-[family-name:var(--font-orbitron)]"
+            className="bg-violet-600 hover:bg-violet-700 text-white font-orbitron"
             onClick={handleSubmit} // Llamamos a la función que guarda en Supabase
             disabled={loading}    // Evita clics repetidos
           >

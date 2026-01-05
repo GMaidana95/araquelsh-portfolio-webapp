@@ -11,7 +11,7 @@ export default function Home() {
     <main className="min-h-screen bg-background relative overflow-hidden">
       <Navbar />
 
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(160,80,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(160,80,255,0.1)_1px,transparent_1px)] bg-[size:50px_50px] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(160,80,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(160,80,255,0.1)_1px,transparent_1px)] bg-size-[50px_50px] mask-[radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]" />
 
       <div className="absolute top-20 right-20 w-96 h-96 bg-neon-primary/20 rounded-full blur-[100px] animate-pulse" />
       <div className="absolute bottom-20 left-20 w-96 h-96 bg-neon-secondary/20 rounded-full blur-[100px] animate-pulse delay-1000" />
@@ -25,7 +25,7 @@ export default function Home() {
                 <img
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Ahri%20aboutme-E8b5UAHivUxRpzTwywsiIs5Q90PQmD.jpg"
                   alt="Araquelsh Cosplayer"
-                  className="w-full h-auto object-cover aspect-[3/4]"
+                  className="w-full h-auto object-cover aspect-3/4"
                 />
               </div>
             </div>
@@ -33,7 +33,7 @@ export default function Home() {
 
           <div className="order-1 lg:order-2 space-y-8">
             <div className="space-y-4">
-              <h1 className="text-6xl lg:text-7xl font-bold tracking-tight font-[family-name:var(--font-orbitron)] neon-text text-primary">
+              <h1 className="text-6xl lg:text-7xl font-bold tracking-tight font-orbitron neon-text text-primary">
                 Araquelsh
               </h1>
 
@@ -50,7 +50,7 @@ export default function Home() {
                 <span className="text-border">|</span>
                 <span className="flex items-center gap-2">
                   <Mic2Icon className="w-5 h-5 text-primary" />
-                  Anfitriona
+                  Conductora
                 </span>
               </div>
 
@@ -66,7 +66,7 @@ export default function Home() {
                   <div className="p-2 rounded-lg bg-neon-primary/30 neon-glow">
                     <Gamepad2 className="w-6 h-6 text-primary" />
                   </div>
-                  <h2 className="text-2xl font-bold font-[family-name:var(--font-orbitron)] text-primary-foreground">
+                  <h2 className="text-2xl font-bold font-orbitron text-primary-foreground">
                     Sobre Mí
                   </h2>
                 </div>
@@ -90,15 +90,15 @@ export default function Home() {
                 <div className="flex gap-4 pt-4 border-t border-glass-border">
                   <div className="flex items-center gap-2 text-primary-foreground/80">
                     <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                    <span className="text-sm font-[family-name:var(--font-orbitron)]">Gaming</span>
+                    <span className="text-sm font-orbitron">Gaming</span>
                   </div>
                   <div className="flex items-center gap-2 text-primary-foreground/80">
                     <div className="w-2 h-2 rounded-full bg-neon-secondary animate-pulse delay-300" />
-                    <span className="text-sm font-[family-name:var(--font-orbitron)]">Anime</span>
+                    <span className="text-sm font-orbitron">Anime</span>
                   </div>
                   <div className="flex items-center gap-2 text-primary-foreground/80">
                     <div className="w-2 h-2 rounded-full bg-neon-accent animate-pulse delay-700" />
-                    <span className="text-sm font-[family-name:var(--font-orbitron)]">Cosplay</span>
+                    <span className="text-sm font-orbitron">Cosplay</span>
                   </div>
                 </div>
               </div>

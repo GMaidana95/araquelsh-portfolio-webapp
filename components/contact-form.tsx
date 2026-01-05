@@ -54,7 +54,7 @@ export function ContactForm() {
     <section className="relative py-20 lg:py-32" id="contacto">
       {/* Violet Grid Background */}
       <div className="absolute inset-0 bg-black">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(160,80,255,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(160,80,255,0.15)_1px,transparent_1px)] bg-[size:40px_40px]" />
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(160,80,255,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(160,80,255,0.15)_1px,transparent_1px)] bg-size-[40px_40px]" />
       </div>
 
       {/* Glowing Orbs */}
@@ -74,7 +74,7 @@ export function ContactForm() {
         <div className="max-w-3xl mx-auto">
           {/* Section Header */}
           <div className="text-center space-y-4 mb-12">
-            <h2 className="text-5xl lg:text-6xl font-bold font-[family-name:var(--font-orbitron)] neon-text text-violet-300">
+            <h2 className="text-5xl lg:text-6xl font-bold font-orbitron neon-text text-violet-300">
               Contacto Profesional
             </h2>
             <p className="text-xl text-violet-200/80">¿Organizas un evento? Trabajemos juntos</p>
@@ -90,7 +90,7 @@ export function ContactForm() {
               <div className="space-y-2">
                 <label
                   htmlFor="name"
-                  className="text-sm font-[family-name:var(--font-orbitron)] text-violet-300 uppercase tracking-wider flex items-center gap-2"
+                  className="text-sm font-orbitron text-violet-300 uppercase tracking-wider flex items-center gap-2"
                 >
                   <div className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
                   Nombre / Empresa
@@ -110,7 +110,7 @@ export function ContactForm() {
               <div className="space-y-2">
                 <label
                   htmlFor="email"
-                  className="text-sm font-[family-name:var(--font-orbitron)] text-violet-300 uppercase tracking-wider flex items-center gap-2"
+                  className="text-sm font-orbitron text-violet-300 uppercase tracking-wider flex items-center gap-2"
                 >
                   <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse delay-300" />
                   Email
@@ -131,7 +131,7 @@ export function ContactForm() {
               <div className="space-y-2">
                 <label
                   htmlFor="eventName"
-                  className="text-sm font-[family-name:var(--font-orbitron)] text-violet-300 uppercase tracking-wider flex items-center gap-2"
+                  className="text-sm font-orbitron text-violet-300 uppercase tracking-wider flex items-center gap-2"
                 >
                   <div className="w-2 h-2 rounded-full bg-pink-400 animate-pulse delay-500" />
                   Nombre del Evento
@@ -151,7 +151,7 @@ export function ContactForm() {
               <div className="space-y-2">
                 <label
                   htmlFor="date"
-                  className="text-sm font-[family-name:var(--font-orbitron)] text-violet-300 uppercase tracking-wider flex items-center gap-2"
+                  className="text-sm font-orbitron text-violet-300 uppercase tracking-wider flex items-center gap-2"
                 >
                   <div className="w-2 h-2 rounded-full bg-violet-300 animate-pulse delay-700" />
                   Fecha del Evento
@@ -171,7 +171,7 @@ export function ContactForm() {
               <div className="space-y-2">
                 <label
                   htmlFor="message"
-                  className="text-sm font-[family-name:var(--font-orbitron)] text-violet-300 uppercase tracking-wider flex items-center gap-2"
+                  className="text-sm font-orbitron text-violet-300 uppercase tracking-wider flex items-center gap-2"
                 >
                   <div className="w-2 h-2 rounded-full bg-purple-300 animate-pulse delay-1000" />
                   Mensaje
@@ -184,7 +184,7 @@ export function ContactForm() {
                   required
                   rows={6}
                   className="bg-black/50 border-violet-500/40 focus:border-violet-400 text-violet-100 placeholder:text-violet-400/50 resize-none neon-border-subtle"
-                  placeholder="Cuéntame sobre tu evento, el rol que buscas (jurado, anfitriona, invitada especial), y cualquier detalle relevante..."
+                  placeholder="Cuéntame sobre tu evento, el rol que buscas (jurado, conductora, invitada especial), y cualquier detalle relevante..."
                 />
               </div>
 
@@ -193,7 +193,7 @@ export function ContactForm() {
                 <Input
                   id="address"
                   name="address"
-                  tabIndex={-1} // Evita que un humano llegue aquí con la tecla 'Tab'
+                  tabIndex={-1}
                   value={formData.surename}
                   onChange={handleChange}
                   placeholder="Tu apellido"
@@ -205,7 +205,7 @@ export function ContactForm() {
                 type="submit"
                 disabled={isSubmitting}
                 onClick={()=>notify}
-                className="w-full h-14 bg-gradient-to-r from-violet-600 via-purple-600 to-violet-600 hover:from-violet-500 hover:via-purple-500 hover:to-violet-500 text-white font-[family-name:var(--font-orbitron)] text-lg uppercase tracking-wider neon-border border-violet-400 relative overflow-hidden group/btn"
+                className="w-full h-14 bg-gradient-to-r from-violet-600 via-purple-600 to-violet-600 hover:from-violet-500 hover:via-purple-500 hover:to-violet-500 text-white font-orbitron text-lg uppercase tracking-wider neon-border border-violet-400 relative overflow-hidden group/btn"
               >
                 <div className="absolute inset-0 bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400 opacity-0 group-hover/btn:opacity-100 animate-pulse-neon" />
                 <span className="relative flex items-center justify-center gap-3">

@@ -6,10 +6,10 @@ export function Footer() {
   return (
     <footer className="relative bg-[#0a0a0a] overflow-hidden">
       {/* Subtle futuristic grid overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(160,80,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(160,80,255,0.05)_1px,transparent_1px)] bg-[size:40px_40px]" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(160,80,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(160,80,255,0.05)_1px,transparent_1px)] bg-size-[40px_40px]" />
 
       {/* Scanline texture effect */}
-      <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(160,80,255,0.02)_50%)] bg-[size:100%_4px]" />
+      <div className="absolute inset-0 bg-[linear-gradient(transparent_50%,rgba(160,80,255,0.02)_50%)] bg-size-[100%_4px]" />
 
 
       {/* Top neon gradient border */}
@@ -20,10 +20,10 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-16 mb-12">
           {/* Left Column - Branding */}
           <div className="space-y-3 text-center md:text-left">
-            <h3 className="text-3xl lg:text-4xl font-bold font-[family-name:var(--font-orbitron)] text-violet-300 neon-text">
+            <h3 className="text-3xl lg:text-4xl font-bold font-orbitron text-violet-300 neon-text">
               ARAQUELSH
             </h3>
-            <p className="text-violet-400/80 text-sm tracking-wider">Cosplayer • Jurado • Anfitriona</p>
+            <p className="text-violet-400/80 text-sm tracking-wider">Cosplayer • Jurado • Conductora</p>
           </div>
 
           {/* Middle Column - Social Hub */}
@@ -69,7 +69,7 @@ export function Footer() {
 
           {/* Right Column - Quick Info */}
           <div className="space-y-2 text-center md:text-right">
-            <h4 className="text-sm font-bold font-[family-name:var(--font-orbitron)] text-violet-300 uppercase tracking-widest">
+            <h4 className="text-sm font-bold font-orbitron text-violet-300 uppercase tracking-widest">
               Disponibilidad
             </h4>
             <p className="text-violet-400/70 text-sm">Eventos Internacionales & Locales</p>
@@ -77,13 +77,13 @@ export function Footer() {
         </div>
 
         {/* Thin divider line */}
-        <div className="h-[1px] bg-gradient-to-r from-transparent via-violet-500/30 to-transparent mb-8" />
+        <div className="h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent mb-8" />
 
         {/* Bottom copyright bar */}
         <div className="text-center">
           <p className="text-violet-400/50 text-xs lg:text-sm">
             © 2026 Araquelsh. Todos los derechos reservados. | Developed by{" "}
-            <a href="https://instagram.com/meihou_" target="_blank" rel="noopener noreferrer" className="text-violet-300 font-[family-name:var(--font-orbitron)]">Meihou</a>
+            <a href="https://instagram.com/meihou_" target="_blank" rel="noopener noreferrer" className="text-violet-300 font-orbitron">Meihou</a>
           </p>
         </div>
       </div>

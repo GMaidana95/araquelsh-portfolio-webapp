@@ -30,7 +30,7 @@ export function Navbar() {
           {/* Logo */}
           <button
             onClick={() => scrollToSection("hero")}
-            className="text-2xl font-bold font-[family-name:var(--font-orbitron)] neon-text text-violet-300 hover:text-violet-200 transition-colors"
+            className="text-2xl font-bold font-orbitron neon-text text-violet-300 hover:text-violet-200 transition-colors"
           >
             ARAQUELSH
           </button>

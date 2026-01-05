@@ -71,7 +71,7 @@ export default async function EditPage({ params }: { params: { id: string } | Pr
       <AdminLayout>
         <div className="space-y-6">
           <div>
-            <h1 className="text-3xl font-bold font-[family-name:var(--font-orbitron)] neon-text text-violet-300">
+            <h1 className="text-3xl font-bold font-orbitron neon-text text-violet-300">
               Editar Cosplay: {cosplay.name}
             </h1>
             <p className="text-muted-foreground mt-2">Modifica los detalles de tu proyecto</p>

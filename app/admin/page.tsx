@@ -5,7 +5,7 @@ export default function AdminPage() {
     <AdminLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold font-[family-name:var(--font-orbitron)] neon-text text-violet-300">
+          <h1 className="text-3xl font-bold font-orbitron neon-text text-violet-300">
             Dashboard
           </h1>
           <p className="text-muted-foreground mt-2">Gestiona tu portafolio de cosplay</p>

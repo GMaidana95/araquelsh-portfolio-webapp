@@ -12,8 +12,8 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: true, message: "Processed" });
     }// Enviamos el correo
     const data = await resend.emails.send({
-      from: 'Portfolio Araquelsh <onboarding@resend.dev>', // Luego podrás usar un dominio propio
-      to: ['vongotsuna@gmail.com'], // Aquí va el correo real de la cosplayer
+      from: 'Portfolio Araquelsh <onboarding@resend.dev>',
+      to: ['luciaaldanaguala@hotmail.com'], // Aquí va el correo real de la cosplayer
       subject: `[WEB] Nuevo contacto: ${eventName}`,
       html: `
         <div style="font-family: sans-serif; background: #1a1a1a; color: #fff; padding: 20px; border-radius: 10px;">

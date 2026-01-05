@@ -72,7 +72,7 @@ export default function AdminLoginPage() {
       {/* Login Card */}
       <Card className="relative w-full max-w-md glass-card border-0">
         {/* Neon Border Glow */}
-        <div className="absolute -inset-[1px] bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 rounded-xl opacity-40 blur-sm" />
+        <div className="absolute -inset-px bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 rounded-xl opacity-40 blur-sm" />
 
         <div className="relative p-8 lg:p-10 space-y-8">
           {/* Kuromi-style Anime Decorations */}
@@ -95,7 +95,7 @@ export default function AdminLoginPage() {
 
           {/* Title */}
           <div className="text-center space-y-2 pt-8">
-            <h1 className="text-4xl font-bold font-[family-name:var(--font-orbitron)] neon-text text-violet-300">
+            <h1 className="text-4xl font-bold font-orbitron neon-text text-violet-300">
               Bienvenido
             </h1>
             <p className="text-sm text-violet-300/60">Panel de Administración</p>
@@ -157,7 +157,7 @@ export default function AdminLoginPage() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-violet-600 hover:bg-violet-700 text-white font-[family-name:var(--font-orbitron)] uppercase tracking-wider relative overflow-hidden group transition-all duration-300"
+              className="w-full bg-violet-600 hover:bg-violet-700 text-white font-orbitron uppercase tracking-wider relative overflow-hidden group transition-all duration-300"
             >
               {/* Neon Pulse Effect */}
               <div className="absolute inset-0 bg-violet-400/30 animate-pulse-neon" />

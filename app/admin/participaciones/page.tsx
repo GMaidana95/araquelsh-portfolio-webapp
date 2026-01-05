@@ -8,9 +8,7 @@ import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Pencil, Trash2, Plus, Calendar, MapPin, Award, Users, Sparkles, MicVocal, LucideTrophy, HelpingHand, User } from "lucide-react"
-
+import { Pencil, Trash2, Plus, Calendar, MapPin, Award, Sparkles, MicVocal, LucideTrophy, HelpingHand, User } from "lucide-react"
 
 import { supabase } from "@/lib/supabase"
 
@@ -23,10 +21,19 @@ export default function EditParticipacionesPage() {
   // Dialog / form state
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [editingId, setEditingId] = useState<string | null>(null)
-  const [formData, setFormData] = useState({ nombreEvento: "", lugar: "", fecha: "", tipoParticipacion: "Concurso", cosplay: "" })
+  const [formData, setFormData] = useState({ nombreEvento: "", lugar: "", fecha: "", tipoParticipacion: [] as string[], cosplay: "" })
 
   // Cosplays list for the select
   const [cosplays, setCosplays] = useState<{ id: string; name: string }[]>([])
+
+  // Tipos de participación disponibles
+  const tiposParticipacion = [
+    { value: 'Jurado', label: 'Jurado' },
+    { value: 'Conductora', label: 'Conductora' },
+    { value: 'Invitada', label: 'Invitada' },
+    { value: 'Participante', label: 'Participante' },
+    { value: 'Colaboracion', label: 'Colaboración' },
+  ]
 
   const fetchCosplays = async () => {
     try {
@@ -66,7 +73,28 @@ export default function EditParticipacionesPage() {
         cosplayMap = Object.fromEntries((cosplaysData || []).map((c: any) => [c.id, c.name]))
       }
 
-      const mapped = (data || []).map((e: any) => ({ ...e, cosplayName: e.cosplay && typeof e.cosplay === 'string' ? (cosplayMap[e.cosplay] || '') : (e.cosplay?.name || '') }))
+      // Normalize type field: parse JSON string to array, handle legacy string values
+      const mapped = (data || []).map((e: any) => {
+        let tipos: string[] = []
+        if (typeof e.type === 'string' && e.type) {
+          try {
+            const parsed = JSON.parse(e.type)
+            tipos = Array.isArray(parsed) ? parsed : [e.type]
+          } catch {
+            // Si no es JSON válido, tratar como string simple (compatibilidad con datos antiguos)
+            tipos = [e.type]
+          }
+        } else if (Array.isArray(e.type)) {
+          tipos = e.type
+        }
+        
+        return { 
+          ...e, 
+          type: tipos,
+          cosplayName: e.cosplay && typeof e.cosplay === 'string' ? (cosplayMap[e.cosplay] || '') : (e.cosplay?.name || '') 
+        }
+      })
+      
       setEventos(mapped as Evento[])
     } catch (err) {
       console.error('Error fetching eventos:', err)
@@ -81,22 +109,37 @@ export default function EditParticipacionesPage() {
   }, [])
 
   // Map repository rows to UI shape
-  const participaciones = eventos.map((e) => ({
-    id: e.id,
-    nombreEvento: e.event_name,
-    lugar: e.place,
-    fecha: e.date,
-    cosplay: e.cosplay,
-    cosplayName: (e as any).cosplayName || '',
-    tipoParticipacion: e.type || 'Concurso',
-  }))
+  const participaciones = eventos.map((e) => {
+    // Normalize type to array
+    let tipos: string[] = []
+    if (typeof e.type === 'string' && e.type) {
+      try {
+        const parsed = JSON.parse(e.type)
+        tipos = Array.isArray(parsed) ? parsed : [e.type]
+      } catch {
+        tipos = [e.type]
+      }
+    } else if (Array.isArray(e.type)) {
+      tipos = e.type
+    }
+    
+    return {
+      id: e.id,
+      nombreEvento: e.event_name,
+      lugar: e.place,
+      fecha: e.date,
+      cosplay: e.cosplay,
+      cosplayName: (e as any).cosplayName || '',
+      tipoParticipacion: tipos.length > 0 ? tipos : ['Concurso'],
+    }
+  })
 
   // Helpers for badge styles/icons
   const getParticipacionColor = (tipo: string) => {
     switch (tipo) {
       case 'Jurado':
         return 'border-amber-400 text-amber-300 bg-amber-600/10'
-      case 'Anfitrión':
+      case 'Conductora':
         return 'border-green-400 text-green-300 bg-green-600/10'
       case 'Invitada':
         return 'border-blue-400 text-blue-300 bg-blue-600/10'
@@ -113,7 +156,7 @@ export default function EditParticipacionesPage() {
     switch (tipo) {
       case 'Jurado':
         return <Award className="w-4 h-4 text-amber-300" />
-      case 'Anfitrión':
+      case 'Conductora':
         return <MicVocal className="w-4 h-4 text-green-300" />
       case 'Invitada':
         return <Sparkles className="w-4 h-4 text-blue-300" />
@@ -127,25 +170,59 @@ export default function EditParticipacionesPage() {
   }
 
   const handleAdd = () => {
-    setFormData({ nombreEvento: '', lugar: '', fecha: '', tipoParticipacion: 'Concurso', cosplay: "" })
+    setFormData({ nombreEvento: '', lugar: '', fecha: '', tipoParticipacion: [], cosplay: "" })
     setEditingId(null)
     setIsDialogOpen(true)
   }
 
   const handleEdit = (participacion: any) => {
-    setFormData({ nombreEvento: participacion.nombreEvento, lugar: participacion.lugar, fecha: participacion.fecha, tipoParticipacion: participacion.tipoParticipacion, cosplay: participacion.cosplay })
+    // Asegurar que tipoParticipacion sea un array
+    const tipos = Array.isArray(participacion.tipoParticipacion) 
+      ? participacion.tipoParticipacion 
+      : (participacion.tipoParticipacion ? [participacion.tipoParticipacion] : [])
+    
+    setFormData({ 
+      nombreEvento: participacion.nombreEvento, 
+      lugar: participacion.lugar, 
+      fecha: participacion.fecha, 
+      tipoParticipacion: tipos, 
+      cosplay: participacion.cosplay 
+    })
     setEditingId(participacion.id)
     setIsDialogOpen(true)
+  }
+
+  const handleTipoChange = (tipo: string, checked: boolean) => {
+    if (checked) {
+      setFormData({ ...formData, tipoParticipacion: [...formData.tipoParticipacion, tipo] })
+    } else {
+      setFormData({ ...formData, tipoParticipacion: formData.tipoParticipacion.filter(t => t !== tipo) })
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    // Validar que al menos se seleccione un tipo
+    if (formData.tipoParticipacion.length === 0) {
+      alert('Por favor selecciona al menos un tipo de participación')
+      return
+    }
+
     try {
+      // Convertir array a JSON string para almacenar en la base de datos
+      const typeValue = JSON.stringify(formData.tipoParticipacion)
+
       if (editingId) {
         const { error } = await supabase
           .from('eventos')
-          .update({ event_name: formData.nombreEvento, place: formData.lugar, date: formData.fecha, type: formData.tipoParticipacion, cosplay: formData.cosplay || null })
+          .update({ 
+            event_name: formData.nombreEvento, 
+            place: formData.lugar, 
+            date: formData.fecha, 
+            type: typeValue, 
+            cosplay: formData.cosplay || null 
+          })
           .eq('id', editingId)
 
         if (error) throw error
@@ -153,14 +230,20 @@ export default function EditParticipacionesPage() {
         await fetchEventos()
         setIsDialogOpen(false)
         setEditingId(null)
-        setFormData({ nombreEvento: '', lugar: '', fecha: '', tipoParticipacion: 'Concurso', cosplay: '' })
+        setFormData({ nombreEvento: '', lugar: '', fecha: '', tipoParticipacion: [], cosplay: '' })
         return
       }
 
       // Insert nuevo evento
       const { data, error } = await supabase
         .from('eventos')
-        .insert({ event_name: formData.nombreEvento, place: formData.lugar, date: formData.fecha, type: formData.tipoParticipacion, cosplay: formData.cosplay || null })
+        .insert({ 
+          event_name: formData.nombreEvento, 
+          place: formData.lugar, 
+          date: formData.fecha, 
+          type: typeValue, 
+          cosplay: formData.cosplay || null 
+        })
         .select()
 
       if (error) throw error
@@ -168,7 +251,7 @@ export default function EditParticipacionesPage() {
       // Refrescar lista
       await fetchEventos()
       setIsDialogOpen(false)
-      setFormData({ nombreEvento: '', lugar: '', fecha: '', tipoParticipacion: 'Concurso', cosplay: "" })
+      setFormData({ nombreEvento: '', lugar: '', fecha: '', tipoParticipacion: [], cosplay: "" })
     } catch (err: any) {
       alert('Error: ' + (err.message || err))
     }
@@ -197,7 +280,7 @@ export default function EditParticipacionesPage() {
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold font-[family-name:var(--font-orbitron)] neon-text text-violet-300">
+            <h1 className="text-3xl font-bold font-orbitron neon-text text-violet-300">
               Gestionar Participaciones
             </h1>
             <p className="text-muted-foreground mt-2">Administra los eventos donde participas</p>
@@ -205,7 +288,7 @@ export default function EditParticipacionesPage() {
 
           {/* Botón para abrir modal */}
           <div>
-            <Button onClick={handleAdd} className="bg-violet-600 hover:bg-violet-700 text-white font-[family-name:var(--font-orbitron)]">
+            <Button onClick={handleAdd} className="bg-violet-600 hover:bg-violet-700 text-white font-orbitron">
               <Plus className="w-4 h-4 mr-2" />
               Nueva Participación
             </Button>
@@ -218,7 +301,7 @@ export default function EditParticipacionesPage() {
                   <Card className="glass-card border-violet-500/30 bg-black">
                     <div className="p-6">
                       <div className="mb-4">
-                        <h2 className="text-2xl font-bold font-[family-name:var(--font-orbitron)] neon-text text-violet-300">
+                        <h2 className="text-2xl font-bold font-orbitron neon-text text-violet-300">
                           {editingId ? 'Editar Participación' : 'Nueva Participación'}
                         </h2>
                         <p className="text-muted-foreground">Completa la información del evento</p>
@@ -264,43 +347,52 @@ export default function EditParticipacionesPage() {
                         </div>
 
                         <div className="space-y-2">
-                          <Label htmlFor="tipoParticipacion">Tipo de Participación *</Label>
-                          <Select value={formData.tipoParticipacion} onValueChange={(value: string) => setFormData({ ...formData, tipoParticipacion: value })}>
-                            <SelectTrigger className="bg-black/40 border-violet-500/30 focus:border-violet-500">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-black border-violet-500/30">
-                              <SelectItem value="Jurado">Jurado</SelectItem>
-                              <SelectItem value="Anfitrión">Anfitrión</SelectItem>
-                              <SelectItem value="Invitada">Invitada</SelectItem>
-                              <SelectItem value="Participante">Participante</SelectItem>
-                              <SelectItem value="Colaboracion">Colaboracion</SelectItem>
-                            </SelectContent>
-                          </Select>
+                          <Label>Tipo(s) de Participación *</Label>
+                          <div className="space-y-2 p-4 bg-black/20 rounded-lg border border-violet-500/30">
+                            {tiposParticipacion.map((tipo) => (
+                              <label
+                                key={tipo.value}
+                                className="flex items-center gap-3 cursor-pointer hover:bg-violet-500/10 p-2 rounded transition-colors"
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={formData.tipoParticipacion.includes(tipo.value)}
+                                  onChange={(e) => handleTipoChange(tipo.value, e.target.checked)}
+                                  className="w-4 h-4 rounded border-violet-500/30 bg-black/40 text-violet-600 focus:ring-violet-500 focus:ring-offset-0"
+                                />
+                                <span className="text-sm text-violet-200">{tipo.label}</span>
+                              </label>
+                            ))}
+                            {formData.tipoParticipacion.length === 0 && (
+                              <p className="text-xs text-amber-400 mt-2">
+                                Selecciona al menos un tipo de participación
+                              </p>
+                            )}
+                          </div>
                         </div>
 
                         <div className="space-y-2">
                           <Label htmlFor="cosplay">Cosplay</Label>
-                          <Select value={formData.cosplay} onValueChange={(value: string) => setFormData({ ...formData, cosplay: value })}>
-                            <SelectTrigger className="bg-black/40 border-violet-500/30 focus:border-violet-500">
-                              <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent className="bg-black border-violet-500/30">
-                              <SelectItem value="-">Ninguno</SelectItem>
-                              {cosplays.map((c) => (
-                                <SelectItem key={c.id} value={c.id}>
-                                  {c.name}
-                                </SelectItem>
-                              ))}
-                            </SelectContent>
-                          </Select>
+                          <select
+                            id="cosplay"
+                            value={formData.cosplay}
+                            onChange={(e) => setFormData({ ...formData, cosplay: e.target.value })}
+                            className="w-full px-3 py-2 bg-black/40 border border-violet-500/30 rounded-md text-violet-200 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
+                          >
+                            <option value="">Ninguno</option>
+                            {cosplays.map((c) => (
+                              <option key={c.id} value={c.id} className="bg-black">
+                                {c.name}
+                              </option>
+                            ))}
+                          </select>
                         </div>
 
                         <div className="flex justify-end gap-4 pt-4 border-t border-violet-500/30">
                           <Button type="button" variant="outline" onClick={() => setIsDialogOpen(false)} className="border-violet-500/30 bg-transparent">
                             Cancelar
                           </Button>
-                          <Button type="submit" className="bg-violet-600 hover:bg-violet-700 text-white font-[family-name:var(--font-orbitron)]">
+                          <Button type="submit" className="bg-violet-600 hover:bg-violet-700 text-white font-orbitron">
                             {editingId ? 'Guardar Cambios' : 'Crear Participación'}
                           </Button>
                         </div>
@@ -319,14 +411,21 @@ export default function EditParticipacionesPage() {
               <div className="p-6">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1 space-y-3">
-                    <div className="flex items-start justify-between">
-                      <h3 className="text-xl font-bold text-violet-300 font-[family-name:var(--font-orbitron)]">
+                    <div className="flex items-start justify-between gap-4">
+                      <h3 className="text-xl font-bold text-violet-300 font-orbitron">
                         {participacion.nombreEvento}
                       </h3>
-                      <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-[family-name:var(--font-orbitron)] uppercase tracking-wider border ${getParticipacionColor(participacion.tipoParticipacion)}`}>
-                        {getParticipacionIcon(participacion.tipoParticipacion)}
-                        {participacion.tipoParticipacion}
-                      </span>
+                      <div className="flex flex-wrap gap-2">
+                        {participacion.tipoParticipacion.map((tipo, idx) => (
+                          <span
+                            key={idx}
+                            className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-orbitron uppercase tracking-wider border ${getParticipacionColor(tipo)}`}
+                          >
+                            {getParticipacionIcon(tipo)}
+                            {tipo}
+                          </span>
+                        ))}
+                      </div>
                     </div>
                     <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
                       <div className="flex items-center gap-2">
@@ -360,7 +459,7 @@ export default function EditParticipacionesPage() {
             <Card className="glass-card border-violet-500/30">
               <div className="p-12 text-center">
                 <p className="text-muted-foreground">No hay participaciones registradas</p>
-                <Button onClick={handleAdd} className="mt-4 bg-violet-600 hover:bg-violet-700 text-white font-[family-name:var(--font-orbitron)]">
+                <Button onClick={handleAdd} className="mt-4 bg-violet-600 hover:bg-violet-700 text-white font-orbitron">
                   <Plus className="w-4 h-4 mr-2" />
                   Agregar Primera Participación
                 </Button>

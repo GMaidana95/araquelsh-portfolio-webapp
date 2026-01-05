@@ -46,7 +46,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
               <span className="text-2xl">🎭</span>
             </div>
             <div>
-              <h2 className="text-lg font-bold font-[family-name:var(--font-orbitron)] neon-text text-violet-300">
+              <h2 className="text-lg font-bold font-orbitron neon-text text-violet-300">
                 Araquelsh
               </h2>
               <p className="text-xs text-muted-foreground">Admin Panel</p>
@@ -61,7 +61,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                   <Button
                     variant="ghost"
                     className={cn(
-                      "w-full justify-start gap-3 font-[family-name:var(--font-orbitron)]",
+                      "w-full justify-start gap-3 font-orbitron",
                       isActive
                         ? "bg-violet-600/20 text-violet-300 neon-border-subtle"
                         : "text-muted-foreground hover:text-violet-300 hover:bg-violet-600/10",
@@ -103,7 +103,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                     <span className="text-2xl">🎭</span>
                   </div>
                   <div>
-                    <h2 className="text-lg font-bold font-[family-name:var(--font-orbitron)] neon-text text-violet-300">
+                    <h2 className="text-lg font-bold font-orbitron neon-text text-violet-300">
                       Araquelsh
                     </h2>
                     <p className="text-xs text-muted-foreground">Admin Panel</p>
@@ -122,7 +122,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
                       <Button
                         variant="ghost"
                         className={cn(
-                          "w-full justify-start gap-3 font-[family-name:var(--font-orbitron)]",
+                          "w-full justify-start gap-3 font-orbitron",
                           isActive
                             ? "bg-violet-600/20 text-violet-300 neon-border-subtle"
                             : "text-muted-foreground hover:text-violet-300 hover:bg-violet-600/10",
@@ -162,7 +162,7 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
             <Button variant="ghost" size="icon" onClick={() => setSidebarOpen(true)}>
               <Menu className="w-5 h-5" />
             </Button>
-            <h2 className="text-lg font-bold font-[family-name:var(--font-orbitron)] neon-text text-violet-300">
+            <h2 className="text-lg font-bold font-orbitron neon-text text-violet-300">
               Araquelsh Admin
             </h2>
             <div className="w-10" />

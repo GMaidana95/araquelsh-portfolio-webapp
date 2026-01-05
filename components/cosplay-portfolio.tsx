@@ -67,7 +67,7 @@ function MediaCarousel({ media }: { media: MediaItem[] }) {
 
   return (
     <div
-      className="relative aspect-[3/4] overflow-hidden"
+      className="relative aspect-3/4 overflow-hidden"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
@@ -202,7 +202,7 @@ export function CosplayPortfolio() {
     return (
       <div className="flex flex-col items-center justify-center py-20 space-y-4">
         <Loader2 className="w-10 h-10 text-primary animate-spin" />
-        <p className="text-primary font-[family-name:var(--font-orbitron)]">Cargando Galería...</p>
+        <p className="text-primary font-orbitron">Cargando Galería...</p>
       </div>
     )
   }
@@ -210,7 +210,7 @@ export function CosplayPortfolio() {
     <section id="portfolio" className="mt-32 space-y-12">
       {/* Section Title */}
       <div className="text-center space-y-4">
-        <h2 className="text-5xl lg:text-6xl font-bold font-[family-name:var(--font-orbitron)] neon-text text-primary">
+        <h2 className="text-5xl lg:text-6xl font-bold font-orbitron neon-text text-primary">
           Mi Portfolio
         </h2>
         <p className="text-xl text-primary-foreground/80 max-w-2xl mx-auto">
@@ -225,7 +225,7 @@ export function CosplayPortfolio() {
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-3 rounded-xl font-[family-name:var(--font-orbitron)] font-semibold transition-all duration-300 ${
+              className={`px-6 py-3 rounded-xl font-orbitron font-semibold transition-all duration-300 ${
                 selectedCategory === category
                   ? "bg-primary text-primary-foreground neon-glow shadow-[0_0_20px_var(--color-primary)]"
                   : "text-primary hover:text-primary-foreground hover:bg-primary/20"
@@ -252,7 +252,7 @@ export function CosplayPortfolio() {
 
               {/* Category Badge */}
               <div className="absolute top-4 left-4 z-20 ">
-                <Badge className="bg-glow-bg border-primary/60 text-primary backdrop-blur-sm font-[family-name:var(--font-orbitron)] text-xs">
+                <Badge className="bg-glow-bg border-primary/60 text-primary backdrop-blur-sm font-orbitron text-xs">
                   {project.category}
                 </Badge>
               </div>
@@ -261,7 +261,7 @@ export function CosplayPortfolio() {
               <div className="p-6 space-y-4">
                 {/* Character Info */}
                 <div className="space-y-2">
-                  <h3 className="text-2xl font-bold font-[family-name:var(--font-orbitron)] text-primary-foreground group-hover:text-foreground transition-colors flex items-center gap-2">
+                  <h3 className="text-2xl font-bold font-orbitron text-primary-foreground group-hover:text-foreground transition-colors flex items-center gap-2">
                     <Sparkles className="w-5 h-5 text-primary opacity-0 group-hover:opacity-100 transition-opacity" />
                     {project.character}
                   </h3>
@@ -273,7 +273,7 @@ export function CosplayPortfolio() {
 
                 {/* Description */}
                 <div className="pt-4 border-t border-glass-border space-y-2">
-                  <p className="text-xs text-primary font-[family-name:var(--font-orbitron)] uppercase tracking-wider flex items-center gap-2">
+                  <p className="text-xs text-primary font-orbitron uppercase tracking-wider flex items-center gap-2">
                     <MapPin className="w-3 h-3" />
                     Descripción
                   </p>
