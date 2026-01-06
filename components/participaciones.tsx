@@ -3,7 +3,7 @@
 import { Card } from "@/components/ui/card"
 import { Calendar, MapPin, Award, Sparkles, MicVocal, LucideTrophy, HelpingHand } from "lucide-react"
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { supabase } from '@/lib/supabase'
 
 interface Participacion {
@@ -34,6 +34,8 @@ const FALLBACK: Participacion[] = [
 export function Participaciones() {
   const [participaciones, setParticipaciones] = useState<Participacion[]>(FALLBACK)
   const [loading, setLoading] = useState(true)
+  const [isVisible, setIsVisible] = useState(false)
+  const tableRef = useRef<HTMLTableSectionElement>(null)
 
   useEffect(() => {
     const fetchEventos = async () => {
@@ -93,6 +95,30 @@ export function Participaciones() {
     }
 
     fetchEventos()
+  }, [])
+
+  // Intersection Observer for table animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true)
+          }
+        })
+      },
+      { threshold: 0.1 }
+    )
+
+    if (tableRef.current) {
+      observer.observe(tableRef.current)
+    }
+
+    return () => {
+      if (tableRef.current) {
+        observer.unobserve(tableRef.current)
+      }
+    }
   }, [])
 
 
@@ -171,7 +197,7 @@ export function Participaciones() {
                 </th>
               </tr>
             </thead>
-            <tbody>
+            <tbody ref={tableRef}>
               {loading ? (
                 <tr>
                   <td className="px-6 py-6 text-center text-violet-200/60" colSpan={5}>
@@ -188,7 +214,14 @@ export function Participaciones() {
                 participaciones.map((participacion, index) => (
                   <tr
                     key={participacion.id ?? index}
-                    className="border-b border-violet-500/20 hover:bg-violet-950/20 transition-colors duration-300"
+                    className={`border-b border-violet-500/20 hover:bg-violet-950/20 transition-all duration-500 ${
+                      isVisible
+                        ? "opacity-100 translate-y-0"
+                        : "opacity-0 -translate-y-5"
+                    }`}
+                    style={{
+                      transitionDelay: isVisible ? `${index * 100}ms` : "0ms",
+                    }}
                   >
                     <td className="px-6 py-4 text-violet-100/90">
                       <div className="flex items-center gap-2">

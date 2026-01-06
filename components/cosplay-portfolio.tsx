@@ -242,7 +242,7 @@ export function CosplayPortfolio() {
         {filteredProjects.map((project) => (
           <Card
             key={project.id}
-            className="group relative overflow-hidden bg-glow-bg border-glass-border neon-border-subtle hover:border-primary transition-all duration-500 hover:scale-[1.02] cursor-pointer"
+            className="group relative overflow-hidden bg-glow-bg border-glass-border neon-sign-border hover:border-primary transition-all duration-500 hover:scale-[1.02] cursor-pointer"
           >
             {/* Neon Glow Effect on Hover */}
             <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 rounded-2xl opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-500" />
