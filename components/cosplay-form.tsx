@@ -10,10 +10,9 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Upload, X, ImageIcon, Video } from "lucide-react"
-import { supabase } from "@/lib/supabase" // Importamos tu conexión
-import { uploadCosplayImage } from "@/lib/storage-utils" // La función que creamos antes
+import { supabase } from "@/lib/supabase" 
+import { uploadCosplayImage } from "@/lib/storage-utils" 
 import { useRouter } from "next/navigation"
-// ... (tus otros imports)
 interface CosplayFormProps {
   initialData?: any; // Aquí vendrán los datos de Supabase si es edición
 }
@@ -235,9 +234,9 @@ export default function CosplayForm({ initialData }: CosplayFormProps) {
                 <SelectValue placeholder="Selecciona una categoría" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="game">Videojuegos</SelectItem>
-                <SelectItem value="anime">Anime</SelectItem>
-                <SelectItem value="other">Otros</SelectItem>
+                <SelectItem value="Videojuegos">Videojuegos</SelectItem>
+                <SelectItem value="Anime">Anime</SelectItem>
+                <SelectItem value="Otros">Otros</SelectItem>
               </SelectContent>
             </Select>
           </div>

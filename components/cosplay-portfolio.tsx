@@ -2,11 +2,12 @@
 
 import type React from "react"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Sparkles, Heart, MapPin, ChevronLeft, ChevronRight, Loader2 } from "lucide-react"
+import { Sparkles, Heart, MapPin, ChevronLeft, ChevronRight, Loader2, Volume2, VolumeX } from "lucide-react"
 import { supabase } from "@/lib/supabase" // Importamos tu cliente
+import { Button } from "./ui/button"
 
 type MediaItem = {
   type: "image" | "video"
@@ -27,8 +28,18 @@ function MediaCarousel({ media }: { media: MediaItem[] }) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
-
+  const [isMuted, setIsMuted] = useState(true)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const minSwipeDistance = 50
+
+  const toggleMute = (e: React.MouseEvent) => {
+    e.stopPropagation() // Evita que el click active eventos del carrusel
+    if (videoRef.current) {
+      const nuevoEstadoMute = !isMuted; // Calculamos el siguiente estado
+      videoRef.current.muted = nuevoEstadoMute; // Aplicamos al elemento DOM
+      setIsMuted(nuevoEstadoMute); // Actualizamos el estado de React para cambiar el ícono
+    }
+  }
 
   const goToNext = () => {
     setCurrentIndex((prev) => (prev + 1) % media.length)
@@ -67,7 +78,7 @@ function MediaCarousel({ media }: { media: MediaItem[] }) {
 
   return (
     <div
-      className="relative aspect-3/4 overflow-hidden"
+      className="relative aspect-3/4 overflow-hidden group/main"
       onTouchStart={onTouchStart}
       onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
@@ -87,17 +98,34 @@ function MediaCarousel({ media }: { media: MediaItem[] }) {
               className="w-full h-full object-cover"
             />
           ) : (
-            <video src={item.src} className="w-full h-full object-cover" autoPlay loop muted playsInline />
+            <div className="relative w-full h-full group/video">
+              <video ref={index === currentIndex ? videoRef : null} src={item.src} className="w-full h-full object-cover" muted={index === currentIndex ? isMuted : true} autoPlay loop playsInline />
+              <div className="absolute bottom-4 right-4 z-30 transition-all duration-300 group-hover/video:opacity-100">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={toggleMute}
+                  className="bg-black/70 border-primary/50 text-primary hover:bg-primary/20 backdrop-blur-md rounded-full w-12 h-12 shadow-[0_0_20px_rgba(160,80,255,0.6)] transition-all active:scale-95"
+                >
+                  {isMuted ? (
+                    <VolumeX className="w-6 h-6 animate-pulse" />
+                  ) : (
+                    <Volume2 className="w-6 h-6 text-neon-accent" />
+                  )}
+                </Button>
+              </div>
+            </div>
+            
           )}
         </div>
       ))}
 
       {/* Gradient Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-300" />
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-transparent opacity-60 z-20 pointer-events-none" />
 
       {/* Navigation Arrows - Only show if more than 1 media item */}
       {media.length > 1 && (
-        <>
+        <div className="z-40">
           <button
             onClick={(e) => {
               e.stopPropagation()
@@ -119,7 +147,7 @@ function MediaCarousel({ media }: { media: MediaItem[] }) {
           >
             <ChevronRight className="w-5 h-5" />
           </button>
-        </>
+        </div>
       )}
 
       {/* Pagination Dots - Only show if more than 1 media item */}
@@ -175,7 +203,7 @@ export function CosplayPortfolio() {
           description: item.description || "",
           media: item.media_urls.map((url: string) => ({
             // Detectamos si es video por la extensión o asumimos imagen
-            type: url.toLowerCase().endsWith('.mp4') ? "video" : "image",
+            type: url.toLowerCase().endsWith('.mp4') || url.toLowerCase().endsWith('.webm') || url.toLowerCase().endsWith('.mov') ? "video" : "image",
             src: url
           }))
         }))
@@ -247,8 +275,9 @@ export function CosplayPortfolio() {
             {/* Neon Glow Effect on Hover */}
             <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 rounded-2xl opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-500" />
 
-            <div className="relative">
+            <div className="relative group/card">
               <MediaCarousel media={project.media} />
+              
 
               {/* Category Badge */}
               <div className="absolute top-4 left-4 z-20 ">

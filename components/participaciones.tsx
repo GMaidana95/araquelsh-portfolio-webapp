@@ -164,7 +164,7 @@ export function Participaciones() {
           Eventos
         </h2>
         <p className="text-violet-200/80 text-lg max-w-2xl mx-auto">
-          Actividades donde he participado y próximas apariciones
+          Lugares donde he trabajado, mis roles y sus respectivas fechas 🩷
         </p>
       </div>
 
@@ -229,7 +229,7 @@ export function Participaciones() {
                         {participacion.lugar}
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-violet-100/80 font-mono text-sm">{participacion.fecha}</td>
+                    <td className="px-6 py-4 text-violet-100/80 font-mono text-sm">{participacion.fecha.split('-').reverse().join(' / ')}</td>
                     <td className="px-6 py-4 text-violet-100 font-semibold">{participacion.nombreEvento}</td>
                     <td className="px-6 py-4 text-violet-100/80">{participacion.cosplayName}</td>
                     <td className="px-6 py-4">

@@ -340,7 +340,6 @@ export default function EditParticipacionesPage() {
                             type="date"
                             value={formData.fecha}
                             onChange={(e) => setFormData({ ...formData, fecha: e.target.value })}
-                            placeholder="AAAA-MM-DD"
                             className="bg-black/40 border-violet-500/30 focus:border-violet-500"
                             required
                           />
@@ -434,7 +433,7 @@ export default function EditParticipacionesPage() {
                       </div>
                       <div className="flex items-center gap-2">
                         <Calendar className="w-4 h-4 text-violet-400" />
-                        {participacion.fecha}
+                        {participacion.fecha.split('-').reverse().join(' / ')}
                       </div>
                       <div className="flex items-center gap-2">
                         <User className="w-4 h-4 text-violet-400" />

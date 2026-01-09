@@ -52,10 +52,6 @@ export function ContactForm() {
 
   return (
     <section className="relative py-20 lg:py-32" id="contacto">
-      {/* Violet Grid Background */}
-      <div className="absolute inset-0 bg-black">
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(160,80,255,0.15)_1px,transparent_1px),linear-gradient(90deg,rgba(160,80,255,0.15)_1px,transparent_1px)] bg-size-[40px_40px]" />
-      </div>
 
       {/* Glowing Orbs */}
       <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-violet-600/20 rounded-full blur-[120px] animate-pulse" />
@@ -71,7 +67,7 @@ export function ContactForm() {
       </div>
 
       <div className="relative z-10 container mx-auto px-4">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           {/* Section Header */}
           <div className="text-center space-y-4 mb-12">
             <h2 className="text-5xl lg:text-6xl font-bold font-orbitron neon-text text-violet-300">
@@ -82,8 +78,36 @@ export function ContactForm() {
               <div className="h-1 w-20 bg-gradient-to-r from-transparent via-violet-500 to-transparent rounded-full" />
             </div>
           </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Columna Derecha: Texto descriptivo con línea dashed */}
+          <div className="relative lg:pr-12 lg:border-r-2 lg:border-dashed lg:border-violet-500/30 space-y-8 py-8">
+            {/* Ícono decorativo para la columna de texto */}
+            <div className="inline-flex p-3 rounded-2xl bg-violet-500/10 border border-violet-500/20 text-violet-400 mb-4">
+              <Sparkles className="w-8 h-8" />
+            </div>
 
-          {/* Contact Form Card */}
+            <div className="space-y-6">
+              <p className="text-xl lg:text-2xl font-orbitron text-violet-100 leading-relaxed italic">
+              ★ Como creadora de contenido, sé cómo mantener la atención, animar al público y crear climas únicos, ya sea en una conducción en vivo o una entrevista
+              </p>
+              
+              <div className="text-xl lg:text-2xl font-orbitron text-violet-100 leading-relaxed italic">
+                <p>
+                ★ Como cosplayer pongo en acción el arte escénico que amo y practico desde los 8 años de edad.
+                </p>
+                
+              </div>
+              <p className="space-y-4 text-lg font-orbitron text-violet-200/70 leading-loose">
+                  Si buscás un host, invitada o creadora de contenido que le ponga corazón, estilo y mucha nerdidad a tu evento… ¡acá estoy!
+                </p>
+            </div>
+
+            {/* Decoración Kuromi-style al final del texto */}
+            <div className="flex items-center gap-4 pt-4">
+              <Heart className="w-6 h-6 text-pink-500 fill-pink-500/20 animate-bounce" />
+              <div className="h-px flex-1 bg-gradient-to-r from-violet-500/50 to-transparent" />
+            </div>
+          </div>
           <Card className="glass-card neon-border border-violet-500/60 bg-transparent relative overflow-hidden">
             <form onSubmit={handleSubmit} className="relative p-8 lg:p-12 space-y-6">
               {/* Name/Company */}
@@ -222,6 +246,8 @@ export function ContactForm() {
               </div>
             </form>
           </Card>
+          
+          </div>
         </div>
       </div>
     </section>
