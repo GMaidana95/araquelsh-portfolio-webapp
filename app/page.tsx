@@ -76,9 +76,9 @@ export default function Home() {
               <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse" />
               <div className="relative neon-border rounded-2xl overflow-hidden bg-background">
                 <img
-                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Ahri%20aboutme-E8b5UAHivUxRpzTwywsiIs5Q90PQmD.jpg"
+                  src="https://zriubvwzoutaoefoxzdh.supabase.co/storage/v1/object/public/cosplay-media/Cosplays/LynetteAboutme.jpeg"
                   alt="Araquelsh Cosplayer"
-                  className="w-full h-auto object-cover aspect-3/4"
+                  className="w-full h-auto object-cover"
                 />
               </div>
             </div>

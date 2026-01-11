@@ -72,7 +72,7 @@ export function Footer() {
             <h4 className="text-sm font-bold font-orbitron text-violet-300 uppercase tracking-widest">
               Disponibilidad
             </h4>
-            <p className="text-violet-400/70 text-sm">Eventos Internacionales & Locales</p>
+            <p className="text-violet-400/70 text-sm">Eventos Internacionales y Locales</p>
           </div>
         </div>
 

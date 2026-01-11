@@ -73,7 +73,7 @@ export function ContactForm() {
             <h2 className="text-5xl lg:text-6xl font-bold font-orbitron neon-text text-violet-300">
               Contacto Profesional
             </h2>
-            <p className="text-xl text-violet-200/80">¿Organizas un evento? Trabajemos juntos</p>
+            <p className="text-xl text-violet-200/80">¿Estás ideando un evento? Trabajemos juntos!</p>
             <div className="flex justify-center gap-2">
               <div className="h-1 w-20 bg-gradient-to-r from-transparent via-violet-500 to-transparent rounded-full" />
             </div>
