@@ -208,7 +208,7 @@ export function ContactForm() {
                   required
                   rows={6}
                   className="bg-black/50 border-violet-500/40 focus:border-violet-400 text-violet-100 placeholder:text-violet-400/50 resize-none neon-border-subtle"
-                  placeholder="Cuéntame sobre tu evento, el rol que buscas (jurado, conductora, invitada especial), y cualquier detalle relevante..."
+                  placeholder="Contame sobre tu evento, el rol que estás buscando (jurado, conductora, invitada especial) y cualquier detalle relevante..."
                 />
               </div>
 

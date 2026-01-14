@@ -242,7 +242,7 @@ export function CosplayPortfolio() {
           Mi Portfolio
         </h2>
         <p className="text-xl text-primary-foreground/80 max-w-2xl mx-auto">
-          Una colección de mis trabajos favoritos, cada uno con su propia historia y pasión
+          Una colección de mis trabajos, cada uno con su propia historia y pasión
         </p>
       </div>
 

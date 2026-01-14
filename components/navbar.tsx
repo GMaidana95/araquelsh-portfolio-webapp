@@ -107,19 +107,6 @@ export function Navbar() {
                     TikTok
                   </a>
                 </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="text-violet-200 hover:text-violet-300 hover:bg-violet-500/10 cursor-pointer"
-                  asChild
-                >
-                  <a
-                    href="https://twitter.com/araquelsh"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2"
-                  >
-                    <Twitter className="h-4 w-4" />X (Twitter)
-                  </a>
-                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

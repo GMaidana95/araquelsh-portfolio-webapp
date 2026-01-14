@@ -66,30 +66,13 @@ export default function Home() {
       <div className="absolute bottom-20 left-20 w-96 h-96 bg-neon-secondary/20 rounded-full blur-[100px] animate-pulse delay-1000" />
 
       <div id="hero" className="relative z-10 container mx-auto px-4 py-12 lg:py-20 pt-32">
-        <div ref={aboutSectionRef} className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className={`order-2 lg:order-1 transition-all duration-1000 ease-out ${
+        <div ref={aboutSectionRef} className="grid mx-4 my-4 lg:grid-cols-2 gap-12 items-center">
+          <div className={`order-1 lg:order-1 transition-all duration-1000 ease-out ${
             isAboutVisible 
               ? "opacity-100 translate-x-0" 
               : "opacity-0 -translate-x-[100px]"
           }`}>
-            <div className="relative group">
-              <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse" />
-              <div className="relative neon-border rounded-2xl overflow-hidden bg-background">
-                <img
-                  src="https://zriubvwzoutaoefoxzdh.supabase.co/storage/v1/object/public/cosplay-media/Cosplays/LynetteAboutme.jpeg"
-                  alt="Araquelsh Cosplayer"
-                  className="w-full h-auto object-cover"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className={`order-1 lg:order-2 space-y-8 transition-all duration-1000 ease-out ${
-            isAboutVisible 
-              ? "opacity-100 translate-x-0" 
-              : "opacity-0 translate-x-[100px]"
-          }`}>
-            <div className="space-y-4">
+            <div className="space-y-4 py-4">
               <h1 className="text-6xl lg:text-7xl font-bold tracking-tight font-orbitron neon-text text-primary">
                 Araquelsh
               </h1>
@@ -113,9 +96,27 @@ export default function Home() {
 
               <div className="flex items-center gap-2 text-primary-foreground/80">
                 <MapPin className="w-5 h-5 text-primary" />
-                <span className="text-lg">Bahia Blanca, Argentina</span>
+                <span className="text-lg">Bahia Blanca, Buenos Aires, Argentina</span>
               </div>
             </div>
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 rounded-2xl blur opacity-75 group-hover:opacity-100 transition duration-1000 group-hover:duration-200 animate-pulse" />
+              <div className="relative neon-border rounded-2xl overflow-hidden bg-background">
+                <img
+                  src="about-me.webp"
+                  alt="Araquelsh Cosplayer"
+                  className="w-full h-auto object-cover"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className={`order-2 lg:order-2 space-y-8 transition-all duration-1000 ease-out ${
+            isAboutVisible 
+              ? "opacity-100 translate-x-0" 
+              : "opacity-0 translate-x-[100px]"
+          }`}>
+            
 
             <Card id="sobre-mi" className="glass-card neon-border border-glass-border bg-transparent">
               <div className="p-6 lg:p-8 space-y-4">

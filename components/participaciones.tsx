@@ -164,7 +164,7 @@ export function Participaciones() {
           Eventos
         </h2>
         <p className="text-violet-200/80 text-lg max-w-2xl mx-auto">
-          Lugares donde he trabajado, mis roles y sus respectivas fechas 🩷
+          Lugares donde he trabajado, mis roles y sus respectivas fecha
         </p>
       </div>
 

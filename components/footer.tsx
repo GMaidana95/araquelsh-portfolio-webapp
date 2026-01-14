@@ -52,18 +52,6 @@ export function Footer() {
                 <TikTok className="w-6 h-6 text-violet-300 group-hover:text-pink-400 transition-colors relative z-10" />
                 <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-[0_0_20px_rgba(236,72,153,0.6)]" />
               </a>
-
-              <a
-                href="https://x.com/araquelsh"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative p-4 rounded-lg bg-violet-600/10 border border-violet-500/30 hover:border-pink-500/60 transition-all duration-300 hover:scale-110"
-                aria-label="X"
-              >
-                <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-violet-600 to-pink-600 opacity-0 group-hover:opacity-20 blur transition-opacity duration-300" />
-                <Twitter className="w-6 h-6 text-violet-300 group-hover:text-pink-400 transition-colors relative z-10" />
-                <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-[0_0_20px_rgba(236,72,153,0.6)]" />
-              </a>
             </div>
           </div>
 
@@ -72,7 +60,7 @@ export function Footer() {
             <h4 className="text-sm font-bold font-orbitron text-violet-300 uppercase tracking-widest">
               Disponibilidad
             </h4>
-            <p className="text-violet-400/70 text-sm">Eventos Internacionales y Locales</p>
+            <p className="text-violet-400/70 text-sm">Eventos internacionales y locales</p>
           </div>
         </div>
 
