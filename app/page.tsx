@@ -1,7 +1,7 @@
 "use client"
 
 import { Card } from "@/components/ui/card"
-import { AwardIcon, Gamepad2, Mic2Icon,Users, MapPin } from "lucide-react"
+import { AwardIcon, Gamepad2, Mic2Icon, Users, MapPin, CameraIcon, Camera, CameraOffIcon, VideoIcon, VideotapeIcon } from "lucide-react"
 import { CosplayPortfolio } from "@/components/cosplay-portfolio"
 import { Participaciones } from "@/components/participaciones"
 import { ContactForm } from "@/components/contact-form"
@@ -67,11 +67,10 @@ export default function Home() {
 
       <div id="hero" className="relative z-10 container mx-auto px-4 py-12 lg:py-20 pt-32">
         <div ref={aboutSectionRef} className="grid mx-4 my-4 lg:grid-cols-2 gap-12 items-center">
-          <div className={`order-1 lg:order-1 transition-all duration-1000 ease-out ${
-            isAboutVisible 
-              ? "opacity-100 translate-x-0" 
-              : "opacity-0 -translate-x-[100px]"
-          }`}>
+          <div className={`order-1 lg:order-1 transition-all duration-1000 ease-out ${isAboutVisible
+            ? "opacity-100 translate-x-0"
+            : "opacity-0 -translate-x-[100px]"
+            }`}>
             <div className="space-y-4 py-4">
               <h1 className="text-6xl lg:text-7xl font-bold tracking-tight font-orbitron neon-text text-primary">
                 Araquelsh
@@ -92,6 +91,11 @@ export default function Home() {
                   <Mic2Icon className="w-5 h-5 text-primary" />
                   Conductora
                 </span>
+                <span className="text-border">|</span>
+                <span className="flex items-center gap-2">
+                  <VideoIcon className="w-5 h-5 text-primary" />
+                  Creadora de contenido
+                </span>
               </div>
 
               <div className="flex items-center gap-2 text-primary-foreground/80">
@@ -111,12 +115,11 @@ export default function Home() {
             </div>
           </div>
 
-          <div className={`order-2 lg:order-2 space-y-8 transition-all duration-1000 ease-out ${
-            isAboutVisible 
-              ? "opacity-100 translate-x-0" 
-              : "opacity-0 translate-x-[100px]"
-          }`}>
-            
+          <div className={`order-2 lg:order-2 space-y-8 transition-all duration-1000 ease-out ${isAboutVisible
+            ? "opacity-100 translate-x-0"
+            : "opacity-0 translate-x-[100px]"
+            }`}>
+
 
             <Card id="sobre-mi" className="glass-card neon-border border-glass-border bg-transparent">
               <div className="p-6 lg:p-8 space-y-4">
@@ -176,7 +179,7 @@ export default function Home() {
       <Participaciones />
 
       <ContactForm />
-      
+
       <Footer />
     </main>
   )

@@ -35,7 +35,7 @@ export function ContactForm() {
 
       if (response.ok) {
         alert("¡Mensaje enviado con éxito! Araquelsh te contactará pronto.")
-        setFormData({ name: "",surename: "", email: "", eventName: "", date: "", message: "" }) // Limpiar form
+        setFormData({ name: "", surename: "", email: "", eventName: "", date: "", message: "" }) // Limpiar form
       } else {
         throw new Error()
       }
@@ -73,180 +73,180 @@ export function ContactForm() {
             <h2 className="text-5xl lg:text-6xl font-bold font-orbitron neon-text text-violet-300">
               Contacto Profesional
             </h2>
-            <p className="text-xl text-violet-200/80">¿Estás ideando un evento? Trabajemos juntos!</p>
+            <p className="text-xl text-violet-200/80">¿Estás ideando un evento? ¡Trabajemos juntos!</p>
             <div className="flex justify-center gap-2">
               <div className="h-1 w-20 bg-gradient-to-r from-transparent via-violet-500 to-transparent rounded-full" />
             </div>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          {/* Columna Derecha: Texto descriptivo con línea dashed */}
-          <div className="relative lg:pr-12 lg:border-r-2 lg:border-dashed lg:border-violet-500/30 space-y-8 py-8">
-            {/* Ícono decorativo para la columna de texto */}
-            <div className="inline-flex p-3 rounded-2xl bg-violet-500/10 border border-violet-500/20 text-violet-400 mb-4">
-              <Sparkles className="w-8 h-8" />
-            </div>
-
-            <div className="space-y-6">
-              <p className="text-xl lg:text-2xl font-orbitron text-violet-100 leading-relaxed italic">
-              ★ Como creadora de contenido, sé cómo mantener la atención, animar al público y crear climas únicos, ya sea en una conducción en vivo o una entrevista
-              </p>
-              
-              <div className="text-xl lg:text-2xl font-orbitron text-violet-100 leading-relaxed italic">
-                <p>
-                ★ Como cosplayer pongo en acción el arte escénico que amo y practico desde los 8 años de edad.
-                </p>
-                
+            {/* Columna Derecha: Texto descriptivo con línea dashed */}
+            <div className="relative lg:pr-12 lg:border-r-2 lg:border-dashed lg:border-violet-500/30 space-y-8 py-8">
+              {/* Ícono decorativo para la columna de texto */}
+              <div className="inline-flex p-3 rounded-2xl bg-violet-500/10 border border-violet-500/20 text-violet-400 mb-4">
+                <Sparkles className="w-8 h-8" />
               </div>
-              <p className="space-y-4 text-lg font-orbitron text-violet-200/70 leading-loose">
+
+              <div className="space-y-6">
+                <p className="text-xl lg:text-2xl font-orbitron text-violet-100 leading-relaxed italic">
+                  ★ Como creadora de contenido, sé cómo mantener la atención, animar al público y crear climas únicos, ya sea en una conducción en vivo o una entrevista
+                </p>
+
+                <div className="text-xl lg:text-2xl font-orbitron text-violet-100 leading-relaxed italic">
+                  <p>
+                    ★ Como cosplayer pongo en acción el arte escénico que amo y practico desde los 8 años de edad.
+                  </p>
+
+                </div>
+                <p className="space-y-4 text-lg font-orbitron text-violet-200/70 leading-loose">
                   Si buscás un host, invitada o creadora de contenido que le ponga corazón, estilo y mucha nerdidad a tu evento… ¡acá estoy!
                 </p>
+              </div>
+
+              {/* Decoración Kuromi-style al final del texto */}
+              <div className="flex items-center gap-4 pt-4">
+                <Heart className="w-6 h-6 text-pink-500 fill-pink-500/20 animate-bounce" />
+                <div className="h-px flex-1 bg-gradient-to-r from-violet-500/50 to-transparent" />
+              </div>
             </div>
+            <Card className="glass-card neon-border border-violet-500/60 bg-transparent relative overflow-hidden">
+              <form onSubmit={handleSubmit} className="relative p-8 lg:p-12 space-y-6">
+                {/* Name/Company */}
+                <div className="space-y-2">
+                  <label
+                    htmlFor="name"
+                    className="text-sm font-orbitron text-violet-300 uppercase tracking-wider flex items-center gap-2"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
+                    Nombre / Empresa
+                  </label>
+                  <Input
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="bg-black/50 border-violet-500/40 focus:border-violet-400 text-violet-100 placeholder:text-violet-400/50 h-12 neon-border-subtle"
+                    placeholder="Tu nombre o empresa"
+                  />
+                </div>
 
-            {/* Decoración Kuromi-style al final del texto */}
-            <div className="flex items-center gap-4 pt-4">
-              <Heart className="w-6 h-6 text-pink-500 fill-pink-500/20 animate-bounce" />
-              <div className="h-px flex-1 bg-gradient-to-r from-violet-500/50 to-transparent" />
-            </div>
-          </div>
-          <Card className="glass-card neon-border border-violet-500/60 bg-transparent relative overflow-hidden">
-            <form onSubmit={handleSubmit} className="relative p-8 lg:p-12 space-y-6">
-              {/* Name/Company */}
-              <div className="space-y-2">
-                <label
-                  htmlFor="name"
-                  className="text-sm font-orbitron text-violet-300 uppercase tracking-wider flex items-center gap-2"
+                {/* Email */}
+                <div className="space-y-2">
+                  <label
+                    htmlFor="email"
+                    className="text-sm font-orbitron text-violet-300 uppercase tracking-wider flex items-center gap-2"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse delay-300" />
+                    Email
+                  </label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="bg-black/50 border-violet-500/40 focus:border-violet-400 text-violet-100 placeholder:text-violet-400/50 h-12 neon-border-subtle"
+                    placeholder="tu@email.com"
+                  />
+                </div>
+
+                {/* Event Name */}
+                <div className="space-y-2">
+                  <label
+                    htmlFor="eventName"
+                    className="text-sm font-orbitron text-violet-300 uppercase tracking-wider flex items-center gap-2"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-pink-400 animate-pulse delay-500" />
+                    Nombre del Evento
+                  </label>
+                  <Input
+                    id="eventName"
+                    name="eventName"
+                    value={formData.eventName}
+                    onChange={handleChange}
+                    required
+                    className="bg-black/50 border-violet-500/40 focus:border-violet-400 text-violet-100 placeholder:text-violet-400/50 h-12 neon-border-subtle"
+                    placeholder="Comic-Con, Convención de Anime, etc."
+                  />
+                </div>
+
+                {/* Date (Optional) */}
+                <div className="space-y-2">
+                  <label
+                    htmlFor="date"
+                    className="text-sm font-orbitron text-violet-300 uppercase tracking-wider flex items-center gap-2"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-violet-300 animate-pulse delay-700" />
+                    Fecha del Evento
+                    <span className="text-xs text-violet-400/60 normal-case">(Opcional)</span>
+                  </label>
+                  <Input
+                    id="date"
+                    name="date"
+                    type="date"
+                    value={formData.date}
+                    onChange={handleChange}
+                    className="bg-black/50 border-violet-500/40 focus:border-violet-400 text-violet-100 h-12 neon-border-subtle"
+                  />
+                </div>
+
+                {/* Message */}
+                <div className="space-y-2">
+                  <label
+                    htmlFor="message"
+                    className="text-sm font-orbitron text-violet-300 uppercase tracking-wider flex items-center gap-2"
+                  >
+                    <div className="w-2 h-2 rounded-full bg-purple-300 animate-pulse delay-1000" />
+                    Mensaje
+                  </label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={6}
+                    className="bg-black/50 border-violet-500/40 focus:border-violet-400 text-violet-100 placeholder:text-violet-400/50 resize-none neon-border-subtle"
+                    placeholder="Contame sobre tu evento, el rol que estás buscando (jurado, conductora, invitada especial) y cualquier detalle relevante..."
+                  />
+                </div>
+
+                <div className="opacity-0 absolute -z-10 h-0 w-0 overflow-hidden" aria-hidden="true">
+                  <label htmlFor="address">Dirección (No completar)</label>
+                  <Input
+                    id="address"
+                    name="address"
+                    tabIndex={-1}
+                    value={formData.surename}
+                    onChange={handleChange}
+                    placeholder="Tu apellido"
+                  />
+                </div>
+
+                {/* Submit Button */}
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  onClick={() => notify}
+                  className="w-full h-14 bg-gradient-to-r from-violet-600 via-purple-600 to-violet-600 hover:from-violet-500 hover:via-purple-500 hover:to-violet-500 text-white font-orbitron text-lg uppercase tracking-wider neon-border border-violet-400 relative overflow-hidden group/btn"
                 >
-                  <div className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" />
-                  Nombre / Empresa
-                </label>
-                <Input
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="bg-black/50 border-violet-500/40 focus:border-violet-400 text-violet-100 placeholder:text-violet-400/50 h-12 neon-border-subtle"
-                  placeholder="Tu nombre o empresa"
-                />
-              </div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400 opacity-0 group-hover/btn:opacity-100 animate-pulse-neon" />
+                  <span className="relative flex items-center justify-center gap-3">
+                    <Send className="w-5 h-5" />
+                    {isSubmitting ? "Enviando..." : "Enviar Mensaje"}
+                  </span>
+                </Button>
 
-              {/* Email */}
-              <div className="space-y-2">
-                <label
-                  htmlFor="email"
-                  className="text-sm font-orbitron text-violet-300 uppercase tracking-wider flex items-center gap-2"
-                >
-                  <div className="w-2 h-2 rounded-full bg-purple-400 animate-pulse delay-300" />
-                  Email
-                </label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="bg-black/50 border-violet-500/40 focus:border-violet-400 text-violet-100 placeholder:text-violet-400/50 h-12 neon-border-subtle"
-                  placeholder="tu@email.com"
-                />
-              </div>
+                {/* Decorative Elements */}
+                <div className="flex justify-center gap-3 pt-6">
+                  <div className="h-1 w-16 bg-gradient-to-r from-transparent via-violet-500 to-transparent rounded-full animate-pulse" />
+                  <div className="h-1 w-12 bg-gradient-to-r from-transparent via-purple-500 to-transparent rounded-full animate-pulse delay-300" />
+                  <div className="h-1 w-8 bg-gradient-to-r from-transparent via-pink-500 to-transparent rounded-full animate-pulse delay-700" />
+                </div>
+              </form>
+            </Card>
 
-              {/* Event Name */}
-              <div className="space-y-2">
-                <label
-                  htmlFor="eventName"
-                  className="text-sm font-orbitron text-violet-300 uppercase tracking-wider flex items-center gap-2"
-                >
-                  <div className="w-2 h-2 rounded-full bg-pink-400 animate-pulse delay-500" />
-                  Nombre del Evento
-                </label>
-                <Input
-                  id="eventName"
-                  name="eventName"
-                  value={formData.eventName}
-                  onChange={handleChange}
-                  required
-                  className="bg-black/50 border-violet-500/40 focus:border-violet-400 text-violet-100 placeholder:text-violet-400/50 h-12 neon-border-subtle"
-                  placeholder="Comic-Con, Convención de Anime, etc."
-                />
-              </div>
-
-              {/* Date (Optional) */}
-              <div className="space-y-2">
-                <label
-                  htmlFor="date"
-                  className="text-sm font-orbitron text-violet-300 uppercase tracking-wider flex items-center gap-2"
-                >
-                  <div className="w-2 h-2 rounded-full bg-violet-300 animate-pulse delay-700" />
-                  Fecha del Evento
-                  <span className="text-xs text-violet-400/60 normal-case">(Opcional)</span>
-                </label>
-                <Input
-                  id="date"
-                  name="date"
-                  type="date"
-                  value={formData.date}
-                  onChange={handleChange}
-                  className="bg-black/50 border-violet-500/40 focus:border-violet-400 text-violet-100 h-12 neon-border-subtle"
-                />
-              </div>
-
-              {/* Message */}
-              <div className="space-y-2">
-                <label
-                  htmlFor="message"
-                  className="text-sm font-orbitron text-violet-300 uppercase tracking-wider flex items-center gap-2"
-                >
-                  <div className="w-2 h-2 rounded-full bg-purple-300 animate-pulse delay-1000" />
-                  Mensaje
-                </label>
-                <Textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={6}
-                  className="bg-black/50 border-violet-500/40 focus:border-violet-400 text-violet-100 placeholder:text-violet-400/50 resize-none neon-border-subtle"
-                  placeholder="Contame sobre tu evento, el rol que estás buscando (jurado, conductora, invitada especial) y cualquier detalle relevante..."
-                />
-              </div>
-
-              <div className="opacity-0 absolute -z-10 h-0 w-0 overflow-hidden" aria-hidden="true">
-                <label htmlFor="address">Dirección (No completar)</label>
-                <Input
-                  id="address"
-                  name="address"
-                  tabIndex={-1}
-                  value={formData.surename}
-                  onChange={handleChange}
-                  placeholder="Tu apellido"
-                />
-              </div>              
-
-              {/* Submit Button */}
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                onClick={()=>notify}
-                className="w-full h-14 bg-gradient-to-r from-violet-600 via-purple-600 to-violet-600 hover:from-violet-500 hover:via-purple-500 hover:to-violet-500 text-white font-orbitron text-lg uppercase tracking-wider neon-border border-violet-400 relative overflow-hidden group/btn"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-violet-400 via-purple-400 to-pink-400 opacity-0 group-hover/btn:opacity-100 animate-pulse-neon" />
-                <span className="relative flex items-center justify-center gap-3">
-                  <Send className="w-5 h-5" />
-                  {isSubmitting ? "Enviando..." : "Enviar Mensaje"}
-                </span>
-              </Button>
-
-              {/* Decorative Elements */}
-              <div className="flex justify-center gap-3 pt-6">
-                <div className="h-1 w-16 bg-gradient-to-r from-transparent via-violet-500 to-transparent rounded-full animate-pulse" />
-                <div className="h-1 w-12 bg-gradient-to-r from-transparent via-purple-500 to-transparent rounded-full animate-pulse delay-300" />
-                <div className="h-1 w-8 bg-gradient-to-r from-transparent via-pink-500 to-transparent rounded-full animate-pulse delay-700" />
-              </div>
-            </form>
-          </Card>
-          
           </div>
         </div>
       </div>

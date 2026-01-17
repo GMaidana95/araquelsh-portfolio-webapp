@@ -1,7 +1,7 @@
 "use client"
 
 import { Card } from "@/components/ui/card"
-import { Calendar, MapPin, Award, Sparkles, MicVocal, LucideTrophy, HelpingHand } from "lucide-react"
+import { Calendar, MapPin, Award, Sparkles, MicVocal, LucideTrophy, HelpingHand, Heart, HeartPulseIcon } from "lucide-react"
 
 import { useEffect, useState, useRef } from 'react'
 import { supabase } from '@/lib/supabase'
@@ -75,7 +75,7 @@ export function Participaciones() {
           } else if (Array.isArray(e.type)) {
             tipos = e.type
           }
-          
+
           return {
             id: e.id,
             lugar: e.place || '',
@@ -163,8 +163,8 @@ export function Participaciones() {
         <h2 className="text-5xl lg:text-6xl font-bold font-orbitron neon-text text-violet-300">
           Eventos
         </h2>
-        <p className="text-violet-200/80 text-lg max-w-2xl mx-auto">
-          Lugares donde he trabajado, mis roles y sus respectivas fecha
+        <p className="flex items-center justify-center gap-2 text-violet-200/80 text-lg max-w-2xl mx-auto">
+          Lugares donde he trabajado, mis roles y sus respectivas fechas <Heart className="lucide lucide-heart w-6 h-6 text-pink-500 fill-pink-500/20 animate-bounce" />
         </p>
       </div>
 
@@ -214,11 +214,10 @@ export function Participaciones() {
                 participaciones.map((participacion, index) => (
                   <tr
                     key={participacion.id ?? index}
-                    className={`border-b border-violet-500/20 hover:bg-violet-950/20 transition-all duration-500 ${
-                      isVisible
-                        ? "opacity-100 translate-y-0"
-                        : "opacity-0 -translate-y-5"
-                    }`}
+                    className={`border-b border-violet-500/20 hover:bg-violet-950/20 transition-all duration-500 ${isVisible
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 -translate-y-5"
+                      }`}
                     style={{
                       transitionDelay: isVisible ? `${index * 100}ms` : "0ms",
                     }}
@@ -234,8 +233,8 @@ export function Participaciones() {
                     <td className="px-6 py-4 text-violet-100/80">{participacion.cosplayName}</td>
                     <td className="px-6 py-4">
                       <div className="flex flex-wrap gap-2">
-                        {(Array.isArray(participacion.tipoParticipacion) 
-                          ? participacion.tipoParticipacion 
+                        {(Array.isArray(participacion.tipoParticipacion)
+                          ? participacion.tipoParticipacion
                           : [participacion.tipoParticipacion]
                         ).map((tipo, idx) => (
                           <span

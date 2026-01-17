@@ -1,6 +1,6 @@
 "use client"
 
-import { Instagram, TicketIcon as TikTok, Twitter} from "lucide-react"
+import { Instagram, TicketIcon as TikTok, Twitter } from "lucide-react"
 
 export function Footer() {
   return (
@@ -23,7 +23,7 @@ export function Footer() {
             <h3 className="text-3xl lg:text-4xl font-bold font-orbitron text-violet-300 neon-text">
               ARAQUELSH
             </h3>
-            <p className="text-violet-400/80 text-sm tracking-wider">Cosplayer • Jurado • Conductora</p>
+            <p className="text-violet-400/80 text-sm tracking-wider">Cosplayer • Jurado • Conductora • Creadora de contenido</p>
           </div>
 
           {/* Middle Column - Social Hub */}
