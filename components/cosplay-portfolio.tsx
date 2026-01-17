@@ -3,6 +3,7 @@
 import type React from "react"
 
 import { useState, useEffect, useRef } from "react"
+import Image from "next/image"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Sparkles, Heart, MapPin, ChevronLeft, ChevronRight, Loader2, Volume2, VolumeX } from "lucide-react"
@@ -87,15 +88,17 @@ function MediaCarousel({ media }: { media: MediaItem[] }) {
       {media.map((item, index) => (
         <div
           key={index}
-          className={`absolute inset-0 transition-opacity duration-500 ${
-            index === currentIndex ? "opacity-100" : "opacity-0 pointer-events-none"
-          }`}
+          className={`absolute inset-0 transition-opacity duration-500 ${index === currentIndex ? "opacity-100" : "opacity-0 pointer-events-none"
+            }`}
         >
           {item.type === "image" ? (
-            <img
+            <Image
               src={item.src || "/placeholder.svg"}
               alt={`Slide ${index + 1}`}
-              className="w-full h-full object-cover"
+              className="object-cover"
+              fill
+              priority={index === 0}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           ) : (
             <div className="relative w-full h-full group/video">
@@ -115,7 +118,7 @@ function MediaCarousel({ media }: { media: MediaItem[] }) {
                 </Button>
               </div>
             </div>
-            
+
           )}
         </div>
       ))}
@@ -160,11 +163,10 @@ function MediaCarousel({ media }: { media: MediaItem[] }) {
                 e.stopPropagation()
                 goToSlide(index)
               }}
-              className={`transition-all duration-300 rounded-full ${
-                index === currentIndex
-                  ? "w-8 h-2 bg-primary shadow-[0_0_10px_var(--color-primary)]"
-                  : "w-2 h-2 bg-primary/60 hover:bg-primary/80"
-              }`}
+              className={`transition-all duration-300 rounded-full ${index === currentIndex
+                ? "w-8 h-2 bg-primary shadow-[0_0_10px_var(--color-primary)]"
+                : "w-2 h-2 bg-primary/60 hover:bg-primary/80"
+                }`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
@@ -253,11 +255,10 @@ export function CosplayPortfolio() {
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-3 rounded-xl font-orbitron font-semibold transition-all duration-300 ${
-                selectedCategory === category
-                  ? "bg-primary text-primary-foreground neon-glow shadow-[0_0_20px_var(--color-primary)]"
-                  : "text-primary hover:text-primary-foreground hover:bg-primary/20"
-              }`}
+              className={`px-6 py-3 rounded-xl font-orbitron font-semibold transition-all duration-300 ${selectedCategory === category
+                ? "bg-primary text-primary-foreground neon-glow shadow-[0_0_20px_var(--color-primary)]"
+                : "text-primary hover:text-primary-foreground hover:bg-primary/20"
+                }`}
             >
               {category}
             </button>
@@ -277,7 +278,7 @@ export function CosplayPortfolio() {
 
             <div className="relative group/card">
               <MediaCarousel media={project.media} />
-              
+
 
               {/* Category Badge */}
               <div className="absolute top-4 left-4 z-20 ">
