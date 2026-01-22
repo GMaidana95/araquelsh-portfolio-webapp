@@ -243,8 +243,8 @@ export function CosplayPortfolio() {
         <h2 className="text-5xl lg:text-6xl font-bold font-orbitron neon-text text-primary">
           Mi Portfolio
         </h2>
-        <p className="text-xl text-primary-foreground/80 max-w-2xl mx-auto">
-          Una colección de mis trabajos, cada uno con su propia historia y pasión
+        <p className="flex items-center justify-center gap-2 text-violet-200/80 text-lg max-w-2xl mx-auto">
+          Una colección de mis trabajos, cada uno con su propia historia y pasión <Heart className="lucide lucide-heart w-6 h-6 text-pink-500 fill-pink-500/20 animate-bounce" />
         </p>
       </div>
 
